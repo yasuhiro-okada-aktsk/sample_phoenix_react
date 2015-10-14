@@ -44,14 +44,15 @@ gulp.task('sass', function () {
 
 
 var bundler = watchify(browserify({
-    entries: [sourceFile],
-    debug: true,
-    insertGlobals: true,
-    cache: {},
-    packageCache: {},
-    fullPaths: true,
-    transform: [babelify]
-  }));
+  entries: [sourceFile],
+  paths: ['.'],
+  debug: true,
+  insertGlobals: true,
+  cache: {},
+  packageCache: {},
+  fullPaths: true,
+  transform: [babelify]
+}));
 
 bundler.on('update', rebundle);
 bundler.on('log', $.util.log);
@@ -61,7 +62,7 @@ function rebundle() {
     .on('error', $.util.log.bind($.util, 'Browserify Error'))
     .pipe(source(destFileName))
     .pipe(buffer())
-    .pipe(sourcemaps.init({ loadMaps: true }))
+    .pipe(sourcemaps.init({loadMaps: true}))
     .pipe(sourcemaps.write('./'))
     .pipe(gulp.dest(destFolder));
 }
@@ -70,8 +71,11 @@ function rebundle() {
 gulp.task('scripts', rebundle);
 
 gulp.task('buildScripts', function () {
-  return browserify(sourceFile)
-    .transform(babelify)
+  return browserify({
+      entries: sourceFile,
+      paths: ['.'],
+      transform: [babelify]
+    })
     .bundle()
     .pipe(source(destFileName))
     .pipe(gulp.dest(dirDestJs));
