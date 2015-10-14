@@ -25,6 +25,17 @@ export default React.createClass({
                 <li><Link to="/page2">page2</Link></li>
                 <li><a href="/page1">page1 (server)</a></li>
               </ul>
+
+              <ul className="nav navbar-nav navbar-right">
+                <li className="dropdown">
+                  <a href="#" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                     aria-expanded="false">Help <span className="caret"></span></a>
+                  <ul className="dropdown-menu">
+                    <li><a href="/static/help">Help</a></li>
+                    <li><a href="/static/about">About</a></li>
+                  </ul>
+                </li>
+              </ul>
             </div>
           </div>
         </nav>
