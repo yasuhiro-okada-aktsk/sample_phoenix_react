@@ -38,8 +38,14 @@ gulp.task('moveCss', ['clean'], function () {
 });
 
 gulp.task('sass', function () {
-  return sass(dirWebCss, {style: 'expanded'})
-    .pipe(gulp.dest(dirDestCss));
+  return sass(dirWebCss + '/app.scss', {
+    style: 'expanded',
+    precision: 10,
+    loadPath: ['node_modules/']
+  })
+    //.pipe($.autoprefixer('last 1 version'))
+    .pipe(gulp.dest("priv/static/css/"))
+    .pipe($.size());
 });
 
 
@@ -72,10 +78,10 @@ gulp.task('scripts', rebundle);
 
 gulp.task('buildScripts', function () {
   return browserify({
-      entries: sourceFile,
-      paths: ['.'],
-      transform: [babelify]
-    })
+    entries: sourceFile,
+    paths: ['.'],
+    transform: [babelify]
+  })
     .bundle()
     .pipe(source(destFileName))
     .pipe(gulp.dest(dirDestJs));

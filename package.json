@@ -1,15 +1,21 @@
 {
   "repository": {},
   "dependencies": {
+    "bootstrap": "^3.3.5",
+    "bootstrap-sass": "^3.3.5",
     "history": "^1.12.5",
+    "jquery": "^2.1.4",
     "react": "^0.14.0",
     "react-dom": "^0.14.0",
     "react-router": "^1.0.0-rc3"
   },
   "devDependencies": {
     "babelify": "^6.3.0",
+    "browserify": "^11.2.0",
+    "browserify-shim": "^3.8.10",
     "del": "^2.0.2",
     "gulp": "^3.9.0",
+    "gulp-autoprefixer": "^3.0.2",
     "gulp-cache": "^0.3.0",
     "gulp-cssnext": "^1.0.1",
     "gulp-debug": "^2.1.2",

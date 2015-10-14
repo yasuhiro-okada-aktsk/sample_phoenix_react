@@ -20,6 +20,9 @@ import "deps/phoenix_html/web/static/js/phoenix_html"
 
 // import socket from "./socket"
 
+window.$ = window.jQuery = require('jquery');
+require('bootstrap');
+
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { Router, Route, Link, IndexRoute } from 'react-router'
