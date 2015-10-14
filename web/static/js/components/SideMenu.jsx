@@ -8,8 +8,8 @@ export default React.createClass({
     return (
       <nav className="navbar navbar-inverse navbar-fixed-top" id="sidebar-wrapper" role="navigation">
         <ul className="nav sidebar-nav">
-          <li className="sidebar-brand"><Link to="/">home</Link></li>
-          <li><Link to="/">home</Link></li>
+          <li className="sidebar-brand"><Link to="/">Brand</Link></li>
+          <li><Link to="/">Home</Link></li>
           <li><Link to="/page1">page1</Link></li>
           <li><Link to="/page2">page2</Link></li>
           <li><a href="/page1">page1 (server)</a></li>
