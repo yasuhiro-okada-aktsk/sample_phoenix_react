@@ -28,7 +28,7 @@ var sourceFile = dirWebJs + '/app.js',
   destFileName = 'app.js';
 
 // Styles
-gulp.task('styles', ['sass', 'moveCss']);
+gulp.task('styles', ['sass'/*, 'moveCss'*/]);
 
 gulp.task('moveCss', ['clean'], function () {
   // the base option sets the relative root for the set of files,

@@ -43,4 +43,4 @@ ReactDOM.render((
       <Route path="*" component={DefaultPage}/>
     </Route>
   </Router>
-), document.getElementById("container"));
+), document.getElementById("app"));
