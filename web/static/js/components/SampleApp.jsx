@@ -1,4 +1,5 @@
 import React from 'react'
+import ReactDOM from 'react-dom'
 import { Router, Route, Link } from 'react-router'
 
 import SideMenu from './SideMenu.jsx'
@@ -10,26 +11,22 @@ export default React.createClass({
   },
   buildSidebar: function() {
     // http://bootsnipp.com/snippets/featured/fancy-sidebar-navigation
-    var trigger = $('.hamburger'),
-      overlay = $('.overlay'),
-      isClosed = false;
+    var trigger = $('.hamburger');
+    var sideMenu = this.refs.sideMenu;
 
     trigger.click(function () {
       hamburger_cross();
     });
 
     function hamburger_cross() {
-
-      if (isClosed == true) {
-        overlay.hide();
+      if (sideMenu.isClosed()) {
+        sideMenu.close();
         trigger.removeClass('is-open');
         trigger.addClass('is-closed');
-        isClosed = false;
       } else {
-        overlay.show();
+        sideMenu.open();
         trigger.removeClass('is-closed');
         trigger.addClass('is-open');
-        isClosed = true;
       }
     }
 
@@ -37,11 +34,11 @@ export default React.createClass({
       $('#wrapper').toggleClass('toggled');
     });
   },
+
   render: function () {
     return (
       <div id="wrapper">
-        <div className="overlay"></div>
-        <SideMenu />
+        <SideMenu ref="sideMenu" />
 
         <div id="page-content-wrapper">
           <button type="button" className="hamburger is-closed" data-toggle="offcanvas">
