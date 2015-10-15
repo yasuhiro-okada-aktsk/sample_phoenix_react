@@ -16,8 +16,8 @@ defmodule SamplePhoenixReactApp.Router do
   scope "/", SamplePhoenixReactApp do
     pipe_through :browser # Use the default browser stack
 
-    get "/static/*path", PageController, :static
-    get "/*path", PageController, :index
+    get "/static/*paths", PageController, :static
+    get "/*paths", PageController, :index
   end
 
   # Other scopes may use custom stacks.
