@@ -1,12 +1,16 @@
 import React from 'react'
 import { Router, Route, Link } from 'react-router'
 
-export default React.createClass({
-  render: function () {
+export default class DefaultPage extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+
+  render() {
     return (
       <div>
         Default
       </div>
     );
   }
-});
+};

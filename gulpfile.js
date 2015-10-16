@@ -124,9 +124,15 @@ gulp.task('json', function () {
     .pipe(gulp.dest(dirDestJs));
 });
 
-gulp.task('assets', function () {
+gulp.task('assets', ['bootstrap_fonts'], function () {
   return gulp.src([dirWebStatic + '/assets/**/*'])
     .pipe(gulp.dest(dirDestStatic))
+    .pipe($.size());
+});
+
+gulp.task('bootstrap_fonts', function () {
+  return gulp.src(['./node_modules/bootstrap-sass/assets/fonts/bootstrap/*'])
+    .pipe(gulp.dest(dirDestStatic + '/fonts/bootstrap/'))
     .pipe($.size());
 });
 

@@ -3,6 +3,7 @@
   "dependencies": {
     "bootstrap": "^3.3.5",
     "bootstrap-sass": "^3.3.5",
+    "font-awesome": "^4.4.0",
     "history": "^1.12.5",
     "jquery": "^2.1.4",
     "react": "^0.14.0",
@@ -10,6 +11,7 @@
     "react-router": "^1.0.0-rc3"
   },
   "devDependencies": {
+    "babel-jest": "^5.3.0",
     "babelify": "^6.3.0",
     "browserify": "^11.2.0",
     "browserify-shim": "^3.8.10",
@@ -26,10 +28,26 @@
     "gulp-strip-debug": "^1.0.2",
     "gulp-uglify": "^1.4.2",
     "gulp-util": "^3.0.6",
-    "jest": "^0.1.40",
+    "jest-cli": "^0.5.10",
     "path": "^0.12.7",
+    "react-addons-test-utils": "^0.14.0",
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0",
     "watchify": "^3.4.0"
+  },
+  "scripts": {
+    "test": "jest",
+    "testEs7": "BABEL_JEST_STAGE=0 jest",
+    "testDebug": "node-debug --nodejs --harmony ./node_modules/jest-cli/bin/jest.js --runInBand"
+  },
+  "jest": {
+    "rootDir": "./web/static/js",
+    "scriptPreprocessor": "../../../node_modules/babel-jest",
+    "unmockedModulePathPatterns": [
+      "react",
+      "../../../node_modules/react",
+      "../../../node_modules/react-dom",
+      "../../../node_modules/react-addons-test-utils"
+    ]
   }
 }

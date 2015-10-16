@@ -5,7 +5,10 @@ export default React.createClass({
   render: function () {
     return (
       <div>
-        Page1
+        <div>
+          Page1
+        </div>
+        <button className="btn btn-primary"><span className="glyphicon glyphicon-refresh"/> Refresh!</button>
       </div>
     );
   }
