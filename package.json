@@ -39,7 +39,8 @@
     "test": "jest",
     "testEs7": "BABEL_JEST_STAGE=0 jest",
     "testDebug": "node-debug --nodejs --harmony ./node_modules/jest-cli/bin/jest.js --runInBand",
-    "build": "./build.sh"
+    "build": "./build.sh",
+    "gulpBuild": "gulp clean build"
   },
   "jest": {
     "rootDir": "./web/static/js",

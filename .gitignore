@@ -23,9 +23,11 @@ erl_crash.dump
 # variables.
 /config/prod.secret.exs
 
+rel
+npm-debug.log
+
 # IntelliJ
 .idea
 *.iml
 .sass-cache
 .vagrant
-rel
