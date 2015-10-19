@@ -31,3 +31,6 @@ npm-debug.log
 *.iml
 .sass-cache
 .vagrant
+
+# work directory
+package

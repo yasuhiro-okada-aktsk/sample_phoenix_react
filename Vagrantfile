@@ -23,7 +23,7 @@ Vagrant.configure(2) do |config|
   # within the machine from a port on the host machine. In the example below,
   # accessing "localhost:8080" will access port 80 on the guest machine.
   # config.vm.network "forwarded_port", guest: 80, host: 8080
-  config.vm.network "forwarded_port", guest: 4001, host: 14001
+  #config.vm.network "forwarded_port", guest: 4001, host: 14001
 
   # Create a private network, which allows host-only access to the machine
   # using a specific IP.
@@ -69,4 +69,14 @@ Vagrant.configure(2) do |config|
   #   sudo apt-get update
   #   sudo apt-get install -y apache2
   # SHELL
+
+  config.vm.define "default" do |default|
+    default.vm.box = "hashicorp/precise32"
+    default.vm.network "forwarded_port", guest: 4001, host: 14001
+  end
+
+  config.vm.define "server" do |server|
+    server.vm.box = "hashicorp/precise32"
+    server.vm.network "forwarded_port", guest: 4001, host: 14002
+  end
 end
