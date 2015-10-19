@@ -18,7 +18,7 @@ defmodule SamplePhoenixReactApp.Mixfile do
   # Type `mix help compile.app` for more information.
   def application do
     [mod: {SamplePhoenixReactApp, []},
-     applications: [:phoenix, :phoenix_html, :cowboy, :logger,
+     applications: [:phoenix, :phoenix_html, :cowboy, :logger, :httpoison,
                     :phoenix_ecto, :mariaex, :timex, :tzdata]]
   end
 
@@ -37,6 +37,9 @@ defmodule SamplePhoenixReactApp.Mixfile do
      {:phoenix_live_reload, "~> 1.0", only: :dev},
      {:cowboy, "~> 1.0"},
      {:guardian, "~> 0.6.2"},
+     {:comeonin, "~> 1.2.2"},
+     {:httpoison, "~> 0.7.4"},
+     {:feeder_ex, ">= 0.0.0"},
      {:timex, "~> 0.19.5"},
      {:timex_ecto, "~> 0.5.0"},
      {:exrm, "~> 0.19.9"}]
