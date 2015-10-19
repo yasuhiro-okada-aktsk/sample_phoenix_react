@@ -34,10 +34,15 @@ import Page1 from './components/Page1.jsx'
 import Page2 from './components/Page2.jsx'
 import DefaultPage from './components/DefaultPage.jsx'
 
+import SignUp from "./components/SignUp.jsx";
+
 ReactDOM.render((
   <Router history={createBrowserHistory()}>
     <Route path="/" component={App}>
       <IndexRoute component={IndexPage}/>
+
+      <Route path="sign_up" component={SignUp}/>
+
       <Route path="page1" component={Page1}/>
       <Route path="page2" component={Page2}/>
       <Route path="*" component={DefaultPage}/>
