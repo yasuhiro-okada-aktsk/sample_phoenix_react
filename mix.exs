@@ -3,7 +3,7 @@ defmodule SamplePhoenixReactApp.Mixfile do
 
   def project do
     [app: :sample_phoenix_react,
-     version: "0.0.1",
+     version: "0.0.2",
      elixir: "~> 1.0",
      elixirc_paths: elixirc_paths(Mix.env),
      compilers: [:phoenix] ++ Mix.compilers,
