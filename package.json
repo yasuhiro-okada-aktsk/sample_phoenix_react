@@ -36,7 +36,7 @@
     "watchify": "^3.4.0"
   },
   "scripts": {
-    "test": "jest",
+    "test": "jest && mix test",
     "testEs7": "BABEL_JEST_STAGE=0 jest",
     "testDebug": "node-debug --nodejs --harmony ./node_modules/jest-cli/bin/jest.js --runInBand",
     "build": "./build.sh",
