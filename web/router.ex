@@ -24,8 +24,8 @@ defmodule SamplePhoenixReactApp.Router do
   scope "/api/v1", PhoenixDemoApp.Api.V1 do
     pipe_through [:api]
 
-    #post "/login", SessionController, :create, as: :login
-    #delete "/logout", SessionController, :delete, as: :logout
+    post "/login", SessionController, :create, as: :login
+    delete "/logout", SessionController, :delete, as: :logout
 
     resources "/users", UserController
     #resources "/feeds", FeedController
