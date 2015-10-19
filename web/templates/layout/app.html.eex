@@ -15,9 +15,9 @@
     <div id="app" >
 
       <%= @inner %>
-      <div>0.0.2</div>
 
     </div>
+    <div>Ver 0.0.2</div>
     <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
   </body>
 </html>
