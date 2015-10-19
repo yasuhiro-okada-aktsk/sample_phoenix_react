@@ -10,6 +10,8 @@ defmodule SamplePhoenixReactApp.Router do
 
   pipeline :api do
     plug :accepts, ["json"]
+    plug Guardian.Plug.VerifyHeader
+    plug Guardian.Plug.LoadResource
   end
 
   scope "/", SamplePhoenixReactApp do
@@ -17,6 +19,16 @@ defmodule SamplePhoenixReactApp.Router do
 
     get "/static/*paths", StaticController, :static
     get "/*paths", PageController, :index
+  end
+
+  scope "/api/v1", PhoenixDemoApp.Api.V1 do
+    pipe_through [:api]
+
+    #post "/login", SessionController, :create, as: :login
+    #delete "/logout", SessionController, :delete, as: :logout
+
+    resources "/users", UserController
+    #resources "/feeds", FeedController
   end
 
   # Other scopes may use custom stacks.

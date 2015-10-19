@@ -36,6 +36,7 @@ defmodule SamplePhoenixReactApp.Mixfile do
      {:phoenix_html, "~> 2.1"},
      {:phoenix_live_reload, "~> 1.0", only: :dev},
      {:cowboy, "~> 1.0"},
+     {:guardian, "~> 0.6.2"},
      {:timex, "~> 0.19.5"},
      {:timex_ecto, "~> 0.5.0"},
      {:exrm, "~> 0.19.9"}]
