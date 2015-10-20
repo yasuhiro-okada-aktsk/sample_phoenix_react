@@ -1,5 +1,5 @@
 import AppDispatcher from '../dispatcher/AppDispatcher';
-import Store from './store.js';
+import Store from './Store';
 import {ActionTypes} from '../constants/Constants';
 
 class AuthStore extends Store {
