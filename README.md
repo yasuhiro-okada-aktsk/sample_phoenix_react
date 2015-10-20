@@ -23,5 +23,6 @@ Phoenix + React のサンプル
 ## To do
 1. ogp meta data
 1. test (react / phoenix)
+1. relay
 1. redux
 1. webpack
