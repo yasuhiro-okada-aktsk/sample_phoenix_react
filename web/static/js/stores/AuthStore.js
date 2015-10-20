@@ -1,10 +1,8 @@
 import AppDispatcher from '../dispatcher/AppDispatcher';
-import {EventEmitter} from 'events';
+import Store from './store';
 import {ActionTypes} from '../constants/Constants';
 
-var CHANGE_EVENT = 'change';
-
-class AuthStore extends EventEmitter {
+class AuthStore extends Store {
 
   isLoggedIn() {
     return !!localStorage.token;
@@ -20,24 +18,6 @@ class AuthStore extends EventEmitter {
 
   getToken() {
     return localStorage.token;
-  }
-
-  emitChange() {
-    this.emit(CHANGE_EVENT);
-  }
-
-  /**
-   * @param {function} callback
-   */
-  addChangeListener(callback) {
-    this.on(CHANGE_EVENT, callback);
-  }
-
-  /**
-   * @param {function} callback
-   */
-  removeChangeListener(callback) {
-    this.removeListener(CHANGE_EVENT, callback);
   }
 }
 

@@ -8,7 +8,6 @@ export default class AuthActionCreators {
   }
 
   static loggedIn(token) {
-    console.log("loggedIn");
     AppDispatcher.dispatch({
       type: ActionTypes.LOG_IN,
       token: token
