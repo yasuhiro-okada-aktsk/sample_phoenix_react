@@ -32,8 +32,8 @@ export default React.createClass({
   render: function () {
     return (
       <div>
-        <div className=""></div>
-        <form className="signUpForm" onSubmit={this.handleSubmit}>
+        <div className="col-xs-2"></div>
+        <form className="col-xs-4 signUpForm" onSubmit={this.handleSubmit}>
           <div className="form-group">
             <label>Name</label>
             <input type="text" placeholder="Your name" className="form-control" ref="name"/>
