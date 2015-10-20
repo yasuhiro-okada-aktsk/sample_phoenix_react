@@ -4,10 +4,10 @@ import ReactDOM from 'react-dom'
 export default class SignUp extends React.Component {
   constructor(props) {
     super(props);
-    this.handleSubmit = this.handleSubmit.bind(this);
+    this._onSubmit = this._onSubmit.bind(this);
   }
 
-  handleSubmit(e) {
+  _onSubmit(e) {
     e.preventDefault();
     var name = ReactDOM.findDOMNode(this.refs.name).value.trim();
     var email = ReactDOM.findDOMNode(this.refs.email).value.trim();
@@ -41,7 +41,7 @@ export default class SignUp extends React.Component {
     return (
       <div>
         <div className="col-xs-2"></div>
-        <form className="col-xs-4 signUpForm" onSubmit={this.handleSubmit}>
+        <form className="col-xs-4 signUpForm" onSubmit={this._onSubmit}>
           <div className="form-group">
             <label>Name</label>
             <input type="text" placeholder="Your name" className="form-control" ref="name"/>

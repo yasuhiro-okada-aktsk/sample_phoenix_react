@@ -1,11 +1,14 @@
 {
+  "license": "MIT",
   "repository": {},
   "dependencies": {
     "bootstrap": "^3.3.5",
     "bootstrap-sass": "^3.3.5",
+    "flux": "^2.1.1",
     "font-awesome": "^4.4.0",
     "history": "^1.12.5",
     "jquery": "^2.1.4",
+    "keymirror": "^0.1.1",
     "react": "^0.14.0",
     "react-dom": "^0.14.0",
     "react-router": "^1.0.0-rc3"
