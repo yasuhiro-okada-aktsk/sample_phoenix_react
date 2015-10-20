@@ -1,8 +1,23 @@
 import React from 'react'
 import { Router, Route, Link } from 'react-router'
 
-export default React.createClass({
-  render: function () {
+import AuthStore from '../stores/AuthStore';
+
+export default class NavBar extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {loggedIn: AuthStore.isLoggedIn()};
+  }
+
+  componentDidMount() {
+    AuthStore.addChangeListener(this._onChange);
+  }
+
+  componentWillUnmount() {
+    AuthStore.removeChangeListener(this._onChange);
+  }
+
+  render() {
     return (
       <nav className="navbar navbar-default">
         <div className="container-fluid">
@@ -35,9 +50,28 @@ export default React.createClass({
                 </ul>
               </li>
             </ul>
+
+            {this.state.loggedIn ? (
+              <ul className="nav navbar-nav navbar-right">
+                <li><Link to="/sign_out">Sign out</Link></li>
+              </ul>
+            ) : (
+              <div>
+                <ul className="nav navbar-nav navbar-right">
+                  <li><Link to="/sign_in">Log in</Link></li>
+                  <li><Link to="/sign_up">Sign up</Link></li>
+                </ul>
+              </div>
+            )}
+
           </div>
         </div>
       </nav>
     );
   }
-});
+
+  _onChange() {
+    this.state = {loggedIn: AuthStore.isLoggedIn()};
+    $(location).attr('href', "/");
+  }
+};

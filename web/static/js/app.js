@@ -36,6 +36,7 @@ import DefaultPage from './components/DefaultPage.jsx'
 
 import SignUp from "./components/auth/SignUp.jsx";
 import SignIn from "./components/auth/SignIn.jsx";
+import SignOut from "./components/auth/SignOut.jsx";
 
 ReactDOM.render((
   <Router history={createBrowserHistory()}>
@@ -44,6 +45,7 @@ ReactDOM.render((
 
       <Route path="sign_up" component={SignUp}/>
       <Route path="sign_in" component={SignIn}/>
+      <Route path="sign_out" component={SignOut}/>
 
       <Route path="page1" component={Page1}/>
       <Route path="page2" component={Page2}/>
