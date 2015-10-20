@@ -1,18 +1,25 @@
 import React from 'react'
+import ReactDOM from 'react-dom'
 
-export default React.createClass({
-  handleSubmit: function (e) {
+export default class SignUp extends React.Component {
+  constructor(props) {
+    super(props);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  handleSubmit(e) {
     e.preventDefault();
-    var name = React.findDOMNode(this.refs.name).value.trim();
-    var email = React.findDOMNode(this.refs.email).value.trim();
-    var password = React.findDOMNode(this.refs.password).value.trim();
+    var name = ReactDOM.findDOMNode(this.refs.name).value.trim();
+    var email = ReactDOM.findDOMNode(this.refs.email).value.trim();
+    var password = ReactDOM.findDOMNode(this.refs.password).value.trim();
     if (!name || !email || !password) {
       alert('empty!');
       return;
     }
     this.signUp({user: {name: name, email: email, password: password}});
-  },
-  signUp: function (user) {
+  }
+
+  signUp(user) {
     $.ajax({
       url: "/api/v1/users",
       dataType: 'json',
@@ -28,8 +35,9 @@ export default React.createClass({
         alert('error')
       }.bind(this)
     });
-  },
-  render: function () {
+  }
+
+  render() {
     return (
       <div>
         <div className="col-xs-2"></div>
@@ -56,4 +64,4 @@ export default React.createClass({
       </div>
     );
   }
-});
+};
