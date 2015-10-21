@@ -50,19 +50,33 @@ describe('AuthStore', function () {
   });
 
   it('log in', function () {
+    var calledOnChange = false;
+    let onChange = () =>  calledOnChange = true;
+
+    Store.addChangeListener(onChange);
     callback(actionLogIn);
+    Store.removeChangeListener(onChange);
+
     expect(Store.isLoggedIn()).toBeTruthy();
     expect(Store.getToken()).toBe('abc');
+    expect(calledOnChange).toBeTruthy();
   });
 
   it('log out', function () {
+    var calledOnChange = false;
+    let onChange = () =>  calledOnChange = true;
+
     callback(actionLogIn);
     expect(Store.isLoggedIn()).toBeTruthy();
     expect(Store.getToken()).toBe('abc');
+    expect(calledOnChange).toBeFalsy();
 
+    Store.addChangeListener(onChange);
     callback(actionLogOut);
+    Store.removeChangeListener(onChange);
     expect(Store.isLoggedIn()).toBeFalsy();
     expect(Store.getToken()).toBe('');
+    expect(calledOnChange).toBeTruthy();
   });
 
 });
