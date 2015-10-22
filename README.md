@@ -12,3 +12,4 @@ Phoenix + React のサンプル
 1. relay
 1. redux
 1. webpack
+1. ES6(or 7) の mixi の代替
