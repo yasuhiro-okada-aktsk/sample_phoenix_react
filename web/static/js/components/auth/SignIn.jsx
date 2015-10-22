@@ -21,7 +21,7 @@ export default class SignIn extends React.Component {
     return (
       <div>
         <div className="col-xs-2"></div>
-        <form className="col-xs-4" onSubmit={this._onSubmit}>
+        <form className="col-xs-4" onSubmit={::this._onSubmit}>
           <div className="form-group">
             <label>Email</label>
             <input type="text" placeholder="Your email" className="form-control" ref="email"/>

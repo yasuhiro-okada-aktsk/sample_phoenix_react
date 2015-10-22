@@ -9,7 +9,7 @@ Phoenix + React のサンプル
 ## To do
 1. ogp meta data
 1. test (react / phoenix)
-1. relay
 1. redux
 1. webpack
-1. ES6(or 7) の mixi の代替
+1. ES6(or 7) の mixin の代替
+1. coverage (react / phoenix)
