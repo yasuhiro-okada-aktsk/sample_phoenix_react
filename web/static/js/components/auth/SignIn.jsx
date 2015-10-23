@@ -6,7 +6,7 @@ import AuthStore from '../../stores/AuthStore';
 export default class SignIn extends React.Component {
   constructor(props) {
     super(props);
-    this._onSubmit = this._onSubmit.bind(this);
+    //this._onSubmit = this._onSubmit.bind(this);
   }
 
   componentDidMount() {
