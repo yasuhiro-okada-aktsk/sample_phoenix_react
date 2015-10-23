@@ -4,7 +4,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import TestUtils from 'react-addons-test-utils';
 
-import DefaultPage from '../DefaultPage.jsx'
+import DefaultPage from '../../containers/DefaultPage.jsx'
 
 describe('default page', () => {
 

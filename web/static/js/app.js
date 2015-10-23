@@ -23,33 +23,16 @@ import "deps/phoenix_html/web/static/js/phoenix_html"
 window.$ = window.jQuery = require('jquery');
 require('bootstrap');
 
-import React from 'react'
-import ReactDOM from 'react-dom'
-import { Router, Route, Link, IndexRoute } from 'react-router'
-import createBrowserHistory from 'history/lib/createBrowserHistory';
+import 'babel-core/polyfill';
+import React from 'react';
+import { render } from 'react-dom';
+import Root from './containers/Root';
+import configureStore from './store/configureStore';
 
-import App from './components/SampleApp.jsx'
-import IndexPage from './components/IndexPage.jsx'
-import Page1 from './components/Page1.jsx'
-import Page2 from './components/Page2.jsx'
-import DefaultPage from './components/DefaultPage.jsx'
+const store = configureStore();
 
-import SignUp from "./components/auth/SignUp.jsx";
-import SignIn from "./components/auth/SignIn.jsx";
-import SignOut from "./components/auth/SignOut.jsx";
+render(
+  <Root store={store} />,
+  document.getElementById('app')
+);
 
-ReactDOM.render((
-  <Router history={createBrowserHistory()}>
-    <Route path="/" component={App}>
-      <IndexRoute component={IndexPage}/>
-
-      <Route path="sign_up" component={SignUp}/>
-      <Route path="sign_in" component={SignIn}/>
-      <Route path="sign_out" component={SignOut}/>
-
-      <Route path="page1" component={Page1}/>
-      <Route path="page2" component={Page2}/>
-      <Route path="*" component={DefaultPage}/>
-    </Route>
-  </Router>
-), document.getElementById("app"));
