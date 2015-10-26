@@ -3,6 +3,7 @@ machine:
     version: 4.1.0
 dependencies:
   pre:
+    - npm i npm -g
     - script/ci/prepare.sh
   cache_directories:
     - ~/dependencies
