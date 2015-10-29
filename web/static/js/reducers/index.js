@@ -10,17 +10,19 @@ function errorMessage(state = null, action) {
 
   if (type === ActionTypes.RESET_ERROR_MESSAGE) {
     return null;
-  } else if (error) {
-    return action.error;
+  }
+
+  if (error) {
+    return error;
   }
 
   return state;
 }
 
 const rootReducer = combineReducers({
+  auth,
   errorMessage,
-  router,
-  auth
+  router
 });
 
 export default rootReducer;

@@ -10,11 +10,17 @@ import SignUp from "./components/auth/SignUp.jsx";
 import SignInPage from "./containers/auth/SignInPage.jsx";
 import SignOut from "./components/auth/SignOut.jsx";
 
+import Page1 from './components/Page1.jsx'
+import Page2 from './components/Page2.jsx'
+
 export default (
   <Route path="/" component={App}>
     <IndexRoute component={IndexPage}/>
 
     <Route path="sign_in" component={SignInPage}/>
+
+    <Route path="page1" component={Page1}/>
+    <Route path="page2" component={Page2}/>
     <Route path="*" component={DefaultPage}/>
 
   </Route>
