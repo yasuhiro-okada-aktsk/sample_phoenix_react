@@ -1,6 +1,5 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-//import { loadUser, loadStarred } from '../actions';
 import SignIn from '../../components/auth/SignIn.jsx';
 import zip from 'lodash/array/zip';
 

@@ -9,7 +9,11 @@ export const api = store => next => action => {
 
     fetch(url, {
       method: method,
-      body: params
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(params)
     })
       .then(response =>
         response.json().then(json => ({json, response}))

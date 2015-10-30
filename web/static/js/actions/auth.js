@@ -1,5 +1,5 @@
 import {createAction} from "redux-actions"
-import {METHOD_POST, createMeta} from "./api";
+import {METHOD_POST, createApiMeta} from "./api";
 
 export const SIGN_UP = "SIGN_UP";
 export const SIGN_UP_SUCCESS = "SIGN_UP_SUCCESS";
@@ -11,7 +11,7 @@ export const LOG_OUT = 'LOG_OUT';
 
 export const signUp = createAction(SIGN_UP,
   user => user,
-  user => createMeta("/api/v1/users", user, METHOD_POST, signUpSuccess, signUpFailure));
+  user => createApiMeta("/api/v1/users", user, METHOD_POST, signUpSuccess, signUpFailure));
 
 let signUpSuccess = createAction(SIGN_UP_SUCCESS);
 let signUpFailure = createAction(SIGN_UP_FAILURE);

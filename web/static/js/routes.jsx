@@ -6,7 +6,7 @@ import App from './containers/App.jsx';
 import IndexPage from './containers/IndexPage.jsx'
 import DefaultPage from './containers/DefaultPage.jsx'
 
-import SignUp from "./components/auth/SignUp.jsx";
+import SignUpPage from "./containers/auth/SignUpPage.jsx";
 import SignInPage from "./containers/auth/SignInPage.jsx";
 import SignOut from "./components/auth/SignOut.jsx";
 
@@ -17,6 +17,7 @@ export default (
   <Route path="/" component={App}>
     <IndexRoute component={IndexPage}/>
 
+    <Route path="sign_up" component={SignUpPage}/>
     <Route path="sign_in" component={SignInPage}/>
 
     <Route path="page1" component={Page1}/>
