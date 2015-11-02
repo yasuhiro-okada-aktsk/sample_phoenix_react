@@ -25,7 +25,7 @@ export let auth = handleActions({
   ),
 
   LOG_IN: (state, action) => (
-    action.token
+    action.payload.token ? action.payload.token : state
   ),
 
   LOG_OUT: (state, action) => (

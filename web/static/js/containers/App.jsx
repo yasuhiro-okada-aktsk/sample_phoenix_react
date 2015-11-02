@@ -83,7 +83,7 @@ class App extends Component {
           </button>
 
           <div className="container">
-            <NaviBar />
+            <NaviBar loggedIn={this.props.loggedIn} />
             {this.renderErrorMessage()}
 
             <div>
@@ -98,6 +98,7 @@ class App extends Component {
 
 App.propTypes = {
   // Injected by React Redux
+  loggedIn: PropTypes.bool.isRequired,
   errorMessage: PropTypes.string,
   resetErrorMessage: PropTypes.func.isRequired,
   pushState: PropTypes.func.isRequired,
@@ -108,6 +109,7 @@ App.propTypes = {
 
 function mapStateToProps(state) {
   return {
+    loggedIn: !(state.auth == ""),
     errorMessage: state.errorMessage,
     inputValue: state.router.location.pathname.substring(1)
   };

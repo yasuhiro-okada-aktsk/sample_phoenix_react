@@ -9,3 +9,4 @@ export let resetErrorMessage = createAction(RESET_ERROR_MESSAGE);
 export let createErrorMeta = Error.createErrorMeta;
 
 export let signUp = Auth.signUp;
+export let logIn = Auth.logIn;

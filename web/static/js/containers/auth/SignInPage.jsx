@@ -1,21 +1,17 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import SignIn from '../../components/auth/SignIn.jsx';
-import zip from 'lodash/array/zip';
+import { bindActionCreators } from 'redux';
 
-function loadData(props) {
-  const { login } = props;
-  props.loadUser(login, ['name']);
-  props.loadStarred(login);
-}
+import * as Actions from '../../actions';
+import SignIn from '../../components/auth/SignIn.jsx';
 
 class SignInPage extends Component {
   constructor(props) {
     super(props);
   }
 
-  handleSignInClick() {
-    //this.props.loadStarred(this.props.login, true);
+  handleSignInClick(user) {
+    this.props.logIn(user);
   }
 
   render() {
@@ -25,13 +21,16 @@ class SignInPage extends Component {
   }
 }
 
-SignInPage.propTypes = {
-};
+SignInPage.propTypes = {};
 
 function mapStateToProps(state) {
-
   return state;
 }
 
-export default connect(mapStateToProps, {
-})(SignInPage);
+function mapDispatchToProps(dispatch) {
+  return {
+    ...bindActionCreators(Actions, dispatch)
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SignInPage);
