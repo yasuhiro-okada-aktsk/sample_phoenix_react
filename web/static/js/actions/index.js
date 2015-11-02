@@ -24,3 +24,10 @@ export const logIn = createAction(LOG_IN,
   user => createApiMeta("/api/v1/login", user, METHOD_POST));
 
 export const logOut = createAction(LOG_OUT);
+
+
+export const FEED_ADD = "FEED_ADD";
+
+export const feedAdd = createAction(FEED_ADD,
+  empty,
+  url => createApiMeta("/api/v1/feeds", { feed_url: url }, METHOD_POST));

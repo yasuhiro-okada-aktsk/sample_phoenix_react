@@ -5,6 +5,7 @@ defmodule SamplePhoenixReactApp.Api.V1.FeedController do
 
   alias SamplePhoenixReactApp.RssFeed
   alias SamplePhoenixReactApp.RssEntry
+  alias SamplePhoenixReactApp.RssEntryQuery
 
   plug :scrub_params, "feed_url" when action in [:create]
   plug :scrub_params, "id" when action in [:update]
