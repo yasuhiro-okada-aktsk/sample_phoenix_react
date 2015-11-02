@@ -1,27 +1,15 @@
-import React from 'react'
+import React, { Component, PropTypes } from 'react';
 
-import AuthActionCreators from '../../actions/AuthActionCreators';
-import AuthStore from '../../stores/AuthStore';
-
-export default class SignIn extends React.Component {
+export default class SignIn extends Component {
   constructor(props) {
     super(props);
-    //this._onSubmit = this._onSubmit.bind(this);
-  }
-
-  componentDidMount() {
-    AuthStore.addChangeListener(this._onChange);
-  }
-
-  componentWillUnmount() {
-    AuthStore.removeChangeListener(this._onChange);
   }
 
   render() {
     return (
       <div>
         <div className="col-xs-2"></div>
-        <form className="col-xs-4" onSubmit={::this._onSubmit}>
+        <form className="col-xs-4" onSubmit={::this.handleLoginClick}>
           <div className="form-group">
             <label>Email</label>
             <input type="text" placeholder="Your email" className="form-control" ref="email"/>
@@ -40,8 +28,9 @@ export default class SignIn extends React.Component {
     );
   }
 
-  _onSubmit(e) {
+  handleLoginClick(e) {
     e.preventDefault();
+
     var email = this.refs.email.value.trim();
     var password = this.refs.password.value.trim();
     if (!email || !password) {
@@ -49,10 +38,14 @@ export default class SignIn extends React.Component {
       return;
     }
 
-    AuthActionCreators.logIn({user: {email: email, password: password}})
+    this.props.onSignInClick({user: {email: email, password: password}});
   }
 
   _onChange() {
     $(location).attr('href', "/");
   }
+};
+
+SignIn.propTypes = {
+  onSignInClick: PropTypes.func.isRequired
 };

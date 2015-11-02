@@ -1,24 +1,24 @@
-import React from 'react'
-import ReactDOM from 'react-dom'
+import React, { Component, PropTypes } from 'react';
 
 export default class SignUp extends React.Component {
   constructor(props) {
     super(props);
-    this._onSubmit = this._onSubmit.bind(this);
   }
 
-  _onSubmit(e) {
+  handleSubmit(e) {
     e.preventDefault();
-    var name = ReactDOM.findDOMNode(this.refs.name).value.trim();
-    var email = ReactDOM.findDOMNode(this.refs.email).value.trim();
-    var password = ReactDOM.findDOMNode(this.refs.password).value.trim();
+    var name = this.refs.name.value.trim();
+    var email = this.refs.email.value.trim();
+    var password = this.refs.password.value.trim();
     if (!name || !email || !password) {
       alert('empty!');
       return;
     }
-    this.signUp({user: {name: name, email: email, password: password}});
+
+    this.props.onClickSignUp({user: {name: name, email: email, password: password}});
   }
 
+  /*
   signUp(user) {
     $.ajax({
       url: "/api/v1/users",
@@ -36,12 +36,13 @@ export default class SignUp extends React.Component {
       }.bind(this)
     });
   }
+  */
 
   render() {
     return (
       <div>
         <div className="col-xs-2"></div>
-        <form className="col-xs-4 signUpForm" onSubmit={this._onSubmit}>
+        <form className="col-xs-4 signUpForm" onSubmit={::this.handleSubmit}>
           <div className="form-group">
             <label>Name</label>
             <input type="text" placeholder="Your name" className="form-control" ref="name"/>
@@ -64,4 +65,8 @@ export default class SignUp extends React.Component {
       </div>
     );
   }
+};
+
+SignUp.propTypes = {
+  onClickSignUp: PropTypes.func.isRequired
 };

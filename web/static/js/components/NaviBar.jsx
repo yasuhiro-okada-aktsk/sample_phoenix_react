@@ -1,20 +1,9 @@
-import React from 'react'
+import React, { Component, PropTypes } from 'react';
 import { Router, Route, Link } from 'react-router'
 
-import AuthStore from '../stores/AuthStore';
-
-export default class NavBar extends React.Component {
+export default class NavBar extends Component {
   constructor(props) {
     super(props);
-    this.state = {loggedIn: AuthStore.isLoggedIn()};
-  }
-
-  componentDidMount() {
-    AuthStore.addChangeListener(this._onChange);
-  }
-
-  componentWillUnmount() {
-    AuthStore.removeChangeListener(this._onChange);
   }
 
   render() {
@@ -51,7 +40,7 @@ export default class NavBar extends React.Component {
               </li>
             </ul>
 
-            {this.state.loggedIn ? (
+            {this.props.loggedIn ? (
               <ul className="nav navbar-nav navbar-right">
                 <li><Link to="/sign_out">Sign out</Link></li>
               </ul>
@@ -74,4 +63,9 @@ export default class NavBar extends React.Component {
     this.state = {loggedIn: AuthStore.isLoggedIn()};
     $(location).attr('href', "/");
   }
+};
+
+
+NavBar.propTypes = {
+  loggedIn: PropTypes.bool.isRequired
 };

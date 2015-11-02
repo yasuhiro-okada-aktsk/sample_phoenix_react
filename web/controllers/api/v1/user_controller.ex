@@ -2,6 +2,7 @@ defmodule SamplePhoenixReactApp.Api.V1.UserController do
   use SamplePhoenixReactApp.Web, :controller
 
   alias SamplePhoenixReactApp.UserAuth
+  alias SamplePhoenixReactApp.UserQuery
 
   plug Guardian.Plug.EnsureAuthenticated,
       %{ on_failure: { SamplePhoenixReactApp.Api.V1.SessionController, :unauthenticated_api } } when action in [:index]
@@ -18,10 +19,11 @@ defmodule SamplePhoenixReactApp.Api.V1.UserController do
 
     case Repo.insert(changeset) do
       {:ok, user_auth} ->
+        user = Repo.one(UserQuery.by_email(user_auth_params["email"] || ""))
+        { :ok, jwt, full_claims } = Guardian.encode_and_sign(user, :token)
         conn
         |> put_status(:created)
-        |> put_resp_header("location", user_path(conn, :show, user_auth))
-        |> render("show.json", user_auth: user_auth)
+        |> json %{token: jwt}
       {:error, changeset} ->
         conn
         |> put_status(:unprocessable_entity)

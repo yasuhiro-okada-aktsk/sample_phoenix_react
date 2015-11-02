@@ -3,7 +3,8 @@ import gulp from 'gulp';
 let $ = require('gulp-load-plugins')();
 import sourcemaps from 'gulp-sourcemaps';
 import buffer from 'vinyl-buffer';
-import sass from 'gulp-ruby-sass';
+import sass from 'gulp-sass';
+import size from 'gulp-size';
 
 import browserify from 'browserify';
 import babelify from 'babelify';
@@ -11,40 +12,37 @@ import watchify from 'watchify';
 import source from 'vinyl-source-stream';
 import del from 'del';
 
+let dirNode = './node_modules';
 let dirWebStatic = './web/static';
 let dirDestStatic = './priv/static';
 
 let dirWebJs = dirWebStatic + '/js',
   dirDestJs = dirDestStatic + '/js',
   dirWebCss = dirWebStatic + '/css',
-  dirDestCss = dirDestStatic + '/css'
-  ;
+  dirDestCss = dirDestStatic + '/css';
 
 let sourceFile = dirWebJs + '/app.js',
   destFolder = dirDestJs,
   destFileName = 'app.js';
 
 // Styles
-gulp.task('styles', ['sass'/*, 'moveCss'*/]);
-
-gulp.task('moveCss', ['clean'], function () {
-  // the base option sets the relative root for the set of files,
-  // preserving the folder structure
-  gulp.src([dirWebCss + '/**/*.css'], {base: dirWebCss})
-    .pipe(gulp.dest(dirDestCss));
-});
+gulp.task('styles', ['sass']);
 
 gulp.task('sass', () => {
-  return sass(dirWebCss + '/app.scss', {
-    style: 'expanded',
-    precision: 10,
-    loadPath: ['node_modules/']
-  })
-    //.pipe($.autoprefixer('last 1 version'))
-    .pipe(gulp.dest("priv/static/css/"))
-    .pipe($.size());
+  return gulp.src(dirWebCss + '/app.scss')
+    .pipe(sourcemaps.init())
+    .pipe(sass({
+      outputStyle: 'compressed',
+      includePaths: [
+        dirWebCss,
+        dirNode + '/bootstrap-sass/assets/stylesheets',
+        dirNode + '/font-awesome/scss/'
+      ]
+    }).on('error', sass.logError))
+    .pipe(sourcemaps.write('./'))
+    .pipe(gulp.dest(dirDestCss))
+    .pipe(size());
 });
-
 
 let bundler = watchify(browserify({
   entries: [sourceFile],
@@ -92,27 +90,9 @@ gulp.task('clean', cb => {
 });
 
 // Bundle
-gulp.task('bundle', ['styles', 'scripts', 'bower']);
+gulp.task('bundle', ['styles', 'scripts']);
 
-gulp.task('buildBundle', ['styles', 'buildScripts', /*'moveLibraries',*/ 'bower']);
-
-// Move JS Files and Libraries
-gulp.task('moveLibraries', ['clean'], () => {
-  // the base option sets the relative root for the set of files,
-  // preserving the folder structure
-  gulp.src([dirWebJs + '' + '/**/*.js'], {base: dirWebJs})
-    .pipe(gulp.dest(dirDestJs));
-});
-
-
-// Bower helper
-gulp.task('bower', () => {
-  gulp.src('bower_components/**/*.js', {
-    base: 'bower_components'
-  })
-    .pipe(gulp.dest(dirDestStatic + '/bower_components/'));
-
-});
+gulp.task('buildBundle', ['styles', 'buildScripts']);
 
 gulp.task('json', () => {
   gulp.src(dirWebJs + '/json/**/*.json', {
@@ -121,16 +101,22 @@ gulp.task('json', () => {
     .pipe(gulp.dest(dirDestJs));
 });
 
-gulp.task('assets', ['bootstrap_fonts'], () => {
+gulp.task('assets', ['assets:font-awesome', 'assets:bootstrap'], () => {
   return gulp.src([dirWebStatic + '/assets/**/*'])
     .pipe(gulp.dest(dirDestStatic))
-    .pipe($.size());
+    .pipe(size());
 });
 
-gulp.task('bootstrap_fonts', () => {
-  return gulp.src(['./node_modules/bootstrap-sass/assets/fonts/bootstrap/*'])
-    .pipe(gulp.dest(dirDestStatic + '/fonts/bootstrap/'))
-    .pipe($.size());
+gulp.task('assets:font-awesome', () => {
+  gulp.src([dirNode + '/font-awesome/fonts/**/*'], {base: dirNode + '/font-awesome/'})
+    .pipe(size({title: 'font-awesome'}))
+    .pipe(gulp.dest(dirDestStatic));
+});
+
+gulp.task('assets:bootstrap', () => {
+  gulp.src([dirNode + '/bootstrap-sass/assets/fonts/**/*'], {base: dirNode + '/bootstrap-sass/assets/'})
+    .pipe(size({title: 'bootstrap'}))
+    .pipe(gulp.dest(dirDestStatic));
 });
 
 gulp.task('watch', ['bundle', 'assets'], () => {
@@ -147,4 +133,4 @@ gulp.task('build', ['buildBundle', 'assets'], () => {
 });
 
 // Default task
-gulp.task('default', ['clean', 'build'/*, 'jest'*/]);
+gulp.task('default', ['clean', 'build']);
