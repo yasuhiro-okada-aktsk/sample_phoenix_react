@@ -1,11 +1,13 @@
 import {handleAction} from "redux-actions"
 import 'isomorphic-fetch';
 
+import { createErrorMeta } from "../actions"
+
 export const api = store => next => action => {
   next(action);
 
   if (action.meta.api) {
-    const {url, params, method, success, failure} = action.meta.api;
+    const {url, params, method} = action.meta.api;
 
     fetch(url, {
       method: method,
@@ -20,11 +22,17 @@ export const api = store => next => action => {
       )
       .then(({ json, response }) => {
         if (!response.ok) {
-          next(failure());
+          next(Object.assign(action, {
+            meta: Object.assign(action.meta,
+              createErrorMeta(response.toString())
+            )
+          }));
           return Promise.reject(json);
         }
 
-        next(success(json))
+        next(Object.assign(action, {
+          payload: json
+        }))
       });
   }
 };

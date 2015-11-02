@@ -1,10 +1,10 @@
-import * as ActionTypes from '../actions';
 import merge from 'lodash/object/merge';
-import { routerStateReducer as router } from 'redux-router';
 import { combineReducers } from 'redux';
-import auth from './auth';
+import { routerStateReducer as router } from 'redux-router';
+import { handleActions } from 'redux-actions'
 
-// Updates error message to notify about the failed fetches.
+import * as ActionTypes from '../actions';
+
 function errorMessage(state = null, action) {
   const { type, error } = action;
 
@@ -18,6 +18,21 @@ function errorMessage(state = null, action) {
 
   return state;
 }
+
+export let auth = handleActions({
+  SIGN_UP: (state, action) => (
+    action.payload.token ? action.payload.token : state
+  ),
+
+  LOG_IN: (state, action) => (
+    action.token
+  ),
+
+  LOG_OUT: (state, action) => (
+    ""
+  )
+}, "");
+
 
 const rootReducer = combineReducers({
   auth,

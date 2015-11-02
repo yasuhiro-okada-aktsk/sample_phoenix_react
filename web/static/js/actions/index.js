@@ -1,8 +1,11 @@
+import { createAction } from 'redux-actions'
+
+import * as Error from './error'
+import * as Auth from './auth'
+
 export const RESET_ERROR_MESSAGE = 'RESET_ERROR_MESSAGE';
 
-// Resets the currently visible error message.
-export function resetErrorMessage() {
-  return {
-    type: RESET_ERROR_MESSAGE
-  }
-}
+export let resetErrorMessage = createAction(RESET_ERROR_MESSAGE);
+export let createErrorMeta = Error.createErrorMeta;
+
+export let signUp = Auth.signUp;

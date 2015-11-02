@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import { pushState } from 'redux-router';
 
 import * as Actions from '../../actions';
-import * as AuthActions from '../../actions/auth';
 import SignUp from "../../components/auth/SignUp.jsx"
 
 class SignUpPage extends Component {
@@ -20,7 +19,8 @@ class SignUpPage extends Component {
   move() {
     console.log("move : " + this.props.auth );
     if(this.props.auth != "") {
-      this.props.pushState(null, "../");
+      // TODO not work...
+      this.props.pushState(null, '/');
     }
   }
 
@@ -49,7 +49,6 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     ...bindActionCreators(Actions, dispatch),
-    ...bindActionCreators(AuthActions, dispatch),
     pushState
   };
 }
