@@ -6,7 +6,7 @@ import { createErrorMeta } from "../actions"
 export const api = store => next => action => {
   next(action);
 
-  if (action.meta.api) {
+  if (action.meta && action.meta.api) {
     const {url, params, method} = action.meta.api;
 
     fetch(url, {
