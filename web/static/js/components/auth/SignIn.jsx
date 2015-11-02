@@ -1,8 +1,5 @@
 import React, { Component, PropTypes } from 'react';
 
-import AuthActionCreators from '../../actions/AuthActionCreators';
-import AuthStore from '../../stores/AuthStore';
-
 export default class SignIn extends Component {
   constructor(props) {
     super(props);
