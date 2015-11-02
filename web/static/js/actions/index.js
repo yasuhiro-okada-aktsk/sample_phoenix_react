@@ -1,7 +1,7 @@
 import { createAction } from 'redux-actions'
 
 import { empty } from "./empty"
-import { METHOD_POST, createApiMeta } from "./api";
+import { METHOD_GET, METHOD_POST, createApiMeta } from "./api";
 import * as Error from './error'
 
 export const RESET_ERROR_MESSAGE = 'RESET_ERROR_MESSAGE';
@@ -27,7 +27,12 @@ export const logOut = createAction(LOG_OUT);
 
 
 export const FEED_ADD = "FEED_ADD";
+export const FEED_GET = "FEED_GET";
 
 export const feedAdd = createAction(FEED_ADD,
   empty,
   url => createApiMeta("/api/v1/feeds", { feed_url: url }, METHOD_POST));
+
+export const feedGet = createAction(FEED_GET,
+  empty,
+  () => createApiMeta("/api/v1/feeds", null, METHOD_GET));

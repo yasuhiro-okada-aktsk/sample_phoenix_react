@@ -19,7 +19,7 @@ function errorMessage(state = null, action) {
   return state;
 }
 
-export let auth = handleActions({
+let auth = handleActions({
   SIGN_UP: (state, action) => (
     action.payload.token ? action.payload.token : state
   ),
@@ -33,9 +33,16 @@ export let auth = handleActions({
   )
 }, "");
 
+let feeds = handleActions({
+  FEED_GET: (state, action) => (
+    action.payload ? action.payload : state
+  )
+}, []);
+
 
 const rootReducer = combineReducers({
   auth,
+  feeds,
   errorMessage,
   router
 });

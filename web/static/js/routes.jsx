@@ -11,6 +11,7 @@ import SignInPage from "./containers/auth/SignInPage.jsx";
 import SignOutPage from "./containers/auth/SignOutPage.jsx";
 
 import FeedAddPage from "./containers/feed/FeedAddPage.jsx";
+import FeedListPage from "./containers/feed/FeedListPage.jsx";
 
 import Page1 from './components/Page1.jsx'
 import Page2 from './components/Page2.jsx'
@@ -24,6 +25,7 @@ export default (
     <Route path="sign_out" component={SignOutPage}/>
 
     <Route path="feed_add" component={FeedAddPage}/>
+    <Route path="feed_list" component={FeedListPage}/>
 
     <Route path="page1" component={Page1}/>
     <Route path="page2" component={Page2}/>

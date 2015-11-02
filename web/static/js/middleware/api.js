@@ -7,7 +7,7 @@ export const api = store => next => action => {
   next(action);
 
   if (action.meta && action.meta.api) {
-    const {url, params, method} = action.meta.api;
+    const { url, params, method } = action.meta.api;
 
     fetch(url, {
       method: method,
@@ -15,7 +15,7 @@ export const api = store => next => action => {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify(params)
+      body: method == "get" ? null : JSON.stringify(params)
     })
       .then(response =>
         response.json().then(json => ({json, response}))

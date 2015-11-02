@@ -3,27 +3,21 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import * as Actions from '../../actions';
-import FeedAdd from '../../components/feed/FeedAdd.jsx'
 
-class FeedAddPage extends Component {
-  handleSubmit(url) {
-    if (!url) {
-      alert('empty!');
-      return;
-    }
-
-    this.props.feedAdd(url);
+class FeedListPage extends Component {
+  componentDidMount() {
+    this.props.feedGet();
   }
 
   render() {
     return (
-      <FeedAdd onSubmit={::this.handleSubmit}/>
+      <div>list</div>
     );
   }
 }
 
 
-FeedAddPage.propTypes = {};
+FeedListPage.propTypes = {};
 
 function mapStateToProps(state) {
   return state;
@@ -35,4 +29,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(FeedAddPage);
+export default connect(mapStateToProps, mapDispatchToProps)(FeedListPage);
