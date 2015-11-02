@@ -13,6 +13,7 @@ export const signUp = createAction(SIGN_UP,
   empty,
   user => createApiMeta("/api/v1/users", user, METHOD_POST));
 
+
 export function logIn(token) {
   return {
     type: LOG_IN,
