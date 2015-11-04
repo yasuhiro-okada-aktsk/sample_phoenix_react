@@ -37,7 +37,7 @@ let feeds = handleActions({
   FEED_GET: (state, action) => (
     action.payload ? action.payload : state
   )
-}, []);
+},  []);
 
 
 const rootReducer = combineReducers({

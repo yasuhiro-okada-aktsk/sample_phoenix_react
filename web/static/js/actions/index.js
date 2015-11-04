@@ -15,12 +15,12 @@ export const LOG_IN = 'LOG_IN';
 export const LOG_OUT = 'LOG_OUT';
 
 export const signUp = createAction(SIGN_UP,
-  empty,
+  undefined,
   user => createApiMeta("/api/v1/users", user, METHOD_POST));
 
 
 export const logIn = createAction(LOG_IN,
-  empty,
+  undefined,
   user => createApiMeta("/api/v1/login", user, METHOD_POST));
 
 export const logOut = createAction(LOG_OUT);
@@ -30,9 +30,9 @@ export const FEED_ADD = "FEED_ADD";
 export const FEED_GET = "FEED_GET";
 
 export const feedAdd = createAction(FEED_ADD,
-  empty,
+  undefined,
   url => createApiMeta("/api/v1/feeds", { feed_url: url }, METHOD_POST));
 
 export const feedGet = createAction(FEED_GET,
-  empty,
+  undefined,
   () => createApiMeta("/api/v1/feeds", null, METHOD_GET));

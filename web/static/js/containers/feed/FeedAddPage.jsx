@@ -26,7 +26,7 @@ class FeedAddPage extends Component {
 FeedAddPage.propTypes = {};
 
 function mapStateToProps(state) {
-  return state;
+  return {};
 }
 
 function mapDispatchToProps(dispatch) {
