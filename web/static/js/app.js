@@ -30,15 +30,17 @@ import { Provider } from 'react-redux';
 import { Adrenaline } from './adrenaline';
 
 import Root from './containers/Root';
-import configureStore from './store/configureStore';
+import configureStore, {finalCreateStore} from './store/configureStore';
 import SampleAdaptor from './adaptor';
+import schema from './schema';
 
 const store = configureStore();
+const adaptor = new SampleAdaptor(schema);
 
 render(
-  <Provider store={store}>
-    <Root />
-  </Provider>,
+  <Adrenaline adaptor={adaptor} >
+    {() => <Root />}
+  </Adrenaline>,
   document.getElementById('app')
 );
 

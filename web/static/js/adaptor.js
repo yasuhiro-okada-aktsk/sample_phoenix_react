@@ -1,54 +1,17 @@
 import 'whatwg-fetch';
 import { createStore, combineReducers } from 'redux';
 import { Adaptor, UPDATE_CACHE } from './adrenaline';
+import GraphQLAdaptor from './adrenaline/adaptor/graphql/GraphQLAdaptor';
 import { reduce, pairs, extend, map } from 'lodash';
 
-function queryParams( obj ) {
-  return '?'+Object.keys(obj).reduce(function(a,k){a.push(k+'='+encodeURIComponent(obj[k]));return a},[]).join('&')
-}
+import configureStore, {finalCreateStore} from './store/configureStore';
 
-function rootReducer(state, action){
-  if(action.type === UPDATE_CACHE){
-    const {type, data} = action.payload;
-    return extend(state, {
-      [type]: data
-    });
+export default class SampleAdaptor extends GraphQLAdaptor {
+  constructor(schema, endpoint='/graphql') {
+    super(schema, endpoint);
   }
-  return state;
-}
 
-export default class SampleAdaptor extends Adaptor {
   createCacheStore(){
-    return createStore(rootReducer, {});
-  }
-
-  selectState(store, query, variables){
-    const state = store.getState();
-    const resolvedRequirements = query(variables);
-    const selectedState = reduce(resolvedRequirements, (result, params, type)=>{
-      result[type] = state[type];
-      return result;
-    }, {});
-    return Promise.resolve(selectedState);
-  }
-
-  performQuery(store, query, variables){
-    const resolvedRequirements = query(variables);
-    const queries = map(pairs(resolvedRequirements), ([type, params])=>{
-      const queryString = Object.keys(params).reduce(function(a,k){a.push(k+'='+encodeURIComponent(params[k]));return a},[]).join('&');
-      const url = `/rest/${type}?${queryString}`;
-      return fetch(url).then((response)=>response.json()).then((json)=>{
-        this.dispatchCacheUpdate(store, {
-          payload: {
-            type,
-            data: json
-          }
-        });
-      });
-    });
-
-    return Promise.all(queries).then(()=>{
-      return {query, variables};
-    });
+    return configureStore();
   }
 }
