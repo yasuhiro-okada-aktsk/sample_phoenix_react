@@ -1,14 +1,15 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { createSmartComponent } from '../../adrenaline';
 
 import * as Actions from '../../actions';
 import Feed from '../../components/feed_graphql/Feed.jsx'
 
 class FeedListGraphqlPage extends Component {
-  componentDidMount() {
-    this.props.feedGet();
-  }
+  static propTypes = {
+    feeds: PropTypes.array.isRequired
+  };
 
   handleRefresh(id) {
   }
@@ -28,21 +29,23 @@ class FeedListGraphqlPage extends Component {
   }
 }
 
-
-FeedListGraphqlPage.propTypes = {
-  feeds: PropTypes.array.isRequired
-};
-
-function mapStateToProps(state) {
-  return {
-    feeds: state.feeds
-  };
-}
-
-function mapDispatchToProps(dispatch) {
-  return {
-    ...bindActionCreators(Actions, dispatch)
-  };
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(FeedListGraphqlPage);
+export default createSmartComponent(FeedListGraphqlPage, {
+  initialVariables: {
+    count: 10,
+  },
+  query: `
+    query Feeds($count) {
+      feedList {
+        feeds(count: $count) {
+          id,
+          title
+        }
+      }
+    }
+  `,
+  /*
+  mutations: {
+    ...feedMutations,
+  },
+  */
+});

@@ -1,6 +1,11 @@
 import React, { Component, PropTypes } from 'react';
 
 export default class Feed extends Component {
+  static propTypes = {
+    feed: PropTypes.object.isRequired,
+    onRefresh: PropTypes.func.isRequired
+  };
+
   handleRefresh(e) {
     e.preventDefault();
     this.props.onRefresh(this.props.feed.id);
@@ -27,8 +32,3 @@ export default class Feed extends Component {
     );
   }
 }
-
-Feed.propTypes = {
-  feed: PropTypes.object.isRequired,
-  onRefresh: PropTypes.func.isRequired
-};

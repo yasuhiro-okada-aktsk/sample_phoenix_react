@@ -44,27 +44,41 @@ const feedType = new GraphQLObjectType({
         },
       },
       resolve: (feed, params, { rootValue: root }) => {
-        if (__CLIENT__) {
-          const entries = feed.entries.map(id => root.Entry[id]);
-          return params.count ? entries.slice(0, params.count) : entries;
-        }
-        return root.findTodo(params);
+        const entries = feed.entries.map(id => root.Entry[id]);
+        return params.count ? entries.slice(0, params.count) : entries;
       },
     },
   }),
 });
 
-export default new GraphQLSchema({
+const feedListType = new GraphQLObjectType({
+  name: 'FeedList',
+  description: 'feed list',
+  fields: () => ({
+    feeds: {
+      type: new GraphQLList(feedType),
+      args: {
+        count: {
+          name: 'count',
+          type: GraphQLInt,
+        },
+      },
+      resolve: (feed, params, { rootValue: root }) => {
+        const entries = feed.entries.map(id => root.Entry[id]);
+        return params.count ? entries.slice(0, params.count) : entries;
+      },
+    },
+  }),
+});
+
+export const Schema = new GraphQLSchema({
   query: new GraphQLObjectType({
     name: 'Query',
     fields: () => ({
-      viewer: {
-        type: feedType,
+      feeds: {
+        type: feedListType,
         resolve: (root) => {
-          if (__CLIENT__) {
-            return root.Feed['u-1'];
-          }
-          return root.findFeed();
+          return root.Feed['u-1'];
         },
       },
     }),
@@ -87,3 +101,5 @@ export default new GraphQLSchema({
     }),
   }),
 });
+
+export default Schema;
