@@ -1,6 +1,6 @@
 /* @flow */
 
-import React, { Component, PropTypes } from 'react/addons';
+import React, { Component, PropTypes } from 'react';
 import createStoreShape from '../store/createStoreShape';
 import createAdaptorShape from '../adaptor/createAdaptorShape';
 import shallowEqual from '../utils/shallowEqual';

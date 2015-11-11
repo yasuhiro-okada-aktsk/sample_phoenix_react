@@ -2,7 +2,7 @@
 
 import React, { Component, PropTypes, Children } from 'react';
 import GraphQLAdaptor from '../adaptor/graphql/GraphQLAdaptor';
-import Loading from './Loading';
+import Loading from './Loading.jsx';
 import { createStore } from 'redux';
 import createStoreShape from '../store/createStoreShape';
 import createAdaptorShape from '../adaptor/createAdaptorShape';

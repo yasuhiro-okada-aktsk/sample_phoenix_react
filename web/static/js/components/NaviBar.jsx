@@ -26,8 +26,7 @@ export default class NavBar extends Component {
               <li><Link to="/">home</Link></li>
               <li><Link to="/feed_add">Feed add</Link></li>
               <li><Link to="/feed_list">Feed List</Link></li>
-              <li><Link to="/page1">page1</Link></li>
-              <li><Link to="/page2">page2</Link></li>
+              <li><Link to="/feed_list_graphql">Feed List (GraphQL)</Link></li>
               <li><a href="/page1">page1 (server)</a></li>
             </ul>
 

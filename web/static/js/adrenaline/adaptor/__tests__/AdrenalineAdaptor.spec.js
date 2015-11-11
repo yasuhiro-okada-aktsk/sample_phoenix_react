@@ -1,7 +1,7 @@
 import test from 'tape';
 import sinon from 'sinon';
 import sinonAsPromised from 'sinon-as-promised';
-import React, { Component, PropTypes } from 'react/addons';
+import React, { Component, PropTypes } from 'react';
 import sd from 'skin-deep';
 import AdrenalineAdaptor from '../AdrenalineAdaptor';
 import {UPDATE_CACHE} from '../../constants';

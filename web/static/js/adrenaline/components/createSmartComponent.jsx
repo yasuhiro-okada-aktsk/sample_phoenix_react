@@ -1,9 +1,9 @@
 /* @flow */
 
-import React, { Component, PropTypes } from 'react/addons';
+import React, { Component, PropTypes } from 'react';
 import invariant from 'invariant';
 import { mapValues, reduce, isFunction, extend, isUndefined, clone } from 'lodash';
-import AdrenalineConnector from './AdrenalineConnector';
+import AdrenalineConnector from './AdrenalineConnector.jsx';
 import shallowEqual from '../utils/shallowEqual';
 import getDisplayName from '../utils/getDisplayName';
 import createAdaptorShape from '../adaptor/createAdaptorShape';

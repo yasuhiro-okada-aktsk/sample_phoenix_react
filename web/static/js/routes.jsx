@@ -12,6 +12,7 @@ import SignOutPage from "./containers/auth/SignOutPage.jsx";
 
 import FeedAddPage from "./containers/feed/FeedAddPage.jsx";
 import FeedListPage from "./containers/feed/FeedListPage.jsx";
+import FeedListGraphqlPage from "./containers/feed_graphql/FeedListPage.jsx";
 
 import Page1 from './components/Page1.jsx'
 import Page2 from './components/Page2.jsx'
@@ -26,6 +27,7 @@ export default (
 
     <Route path="feed_add" component={FeedAddPage}/>
     <Route path="feed_list" component={FeedListPage}/>
+    <Route path="feed_list_graphql" component={FeedListGraphqlPage}/>
 
     <Route path="page1" component={Page1}/>
     <Route path="page2" component={Page2}/>
