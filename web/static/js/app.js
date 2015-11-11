@@ -26,15 +26,12 @@ require('bootstrap');
 import 'babel-core/polyfill';
 import React from 'react';
 import { render } from 'react-dom';
-import { Provider } from 'react-redux';
 import { Adrenaline } from './adrenaline';
 
 import Root from './containers/Root';
-import configureStore, {finalCreateStore} from './store/configureStore';
 import SampleAdaptor from './adaptor';
 import schema from './schema';
 
-const store = configureStore();
 const adaptor = new SampleAdaptor(schema);
 
 render(
