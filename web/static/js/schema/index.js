@@ -10,36 +10,24 @@ import {
   GraphQLSchema,
 } from 'graphql';
 
-const todoType = new GraphQLObjectType({
-  name: 'Todo',
-  description: 'Todo type',
+const entryType = new GraphQLObjectType({
+  name: 'RssEntry',
+  description: 'RssEntry type',
   fields: () => ({
     id: {
       type: new GraphQLNonNull(GraphQLID),
-      description: 'Todo id',
+      description: 'id',
     },
-    text: {
+    title: {
       type: new GraphQLNonNull(GraphQLString),
-      description: 'Todo text',
-    },
-    owner: {
-      type: userType,
-      resolve: (todo, _, { rootValue: root }) => {
-        if (__CLIENT__) {
-          return root.User[todo.owner.id];
-        }
-        return root.findUser();
-      },
-    },
-    createdAt: {
-      type: new GraphQLNonNull(GraphQLString),
-      description: 'Todo creation date',
+      description: 'title',
     },
   }),
 });
 
-const userType = new GraphQLObjectType({
-  name: 'User',
+const feedType = new GraphQLObjectType({
+  name: 'RssFeed',
+  description: 'RssFeed type',
   fields: () => ({
     id: {
       type: new GraphQLNonNull(GraphQLID),
@@ -47,18 +35,18 @@ const userType = new GraphQLObjectType({
     name: {
       type: GraphQLString,
     },
-    todos: {
-      type: new GraphQLList(todoType),
+    entries: {
+      type: new GraphQLList(entryType),
       args: {
         count: {
           name: 'count',
           type: GraphQLInt,
         },
       },
-      resolve: (user, params, { rootValue: root }) => {
+      resolve: (feed, params, { rootValue: root }) => {
         if (__CLIENT__) {
-          const todos = user.todos.map(id => root.Todo[id]);
-          return params.count ? todos.slice(0, params.count) : todos;
+          const entries = feed.entries.map(id => root.Entry[id]);
+          return params.count ? entries.slice(0, params.count) : entries;
         }
         return root.findTodo(params);
       },
@@ -71,12 +59,12 @@ export default new GraphQLSchema({
     name: 'Query',
     fields: () => ({
       viewer: {
-        type: userType,
+        type: feedType,
         resolve: (root) => {
           if (__CLIENT__) {
-            return root.User['u-1'];
+            return root.Feed['u-1'];
           }
-          return root.findUser();
+          return root.findFeed();
         },
       },
     }),
@@ -85,15 +73,15 @@ export default new GraphQLSchema({
     name: 'Mutation',
     fields: () => ({
       createTodo: {
-        type: todoType,
+        type: feedType,
         args: {
-          text: {
-            name: 'text',
+          url: {
+            name: 'url',
             type: GraphQLString,
           },
         },
         resolve: (root, params) => {
-          return root.createTodo(params);
+          return root.createFeed(params);
         },
       },
     }),
