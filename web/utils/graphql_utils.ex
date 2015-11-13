@@ -1,0 +1,84 @@
+defmodule SamplePhoenixReactApp.GraphQlUtils do
+  require Logger
+
+  def parse(query) do
+    graphql = GraphQL.parse(query)
+    normalized = normalize graphql
+    
+    #Apex.ap graphql
+    Apex.ap normalized
+
+    normalized
+  end
+
+  defp normalize([{:kind, _ = :Field} | _ = optional] = item) do
+    item = [{:field, to_string(Keyword.get(item, :name))}]
+
+    if Keyword.has_key?(optional, :arguments) do
+      item = item ++ [{:arguments, normalize(Keyword.get(optional, :arguments))}]
+    end
+
+    if Keyword.has_key?(optional, :selectionSet) do
+      # TODO get_into?
+      selections = optional
+      |> Keyword.get(:selectionSet)
+      |> Keyword.get(:selections)
+
+      Logger.error "selections"
+      Apex.ap selections
+
+      item = item ++ [{:selections, normalize(selections)}]
+    end
+
+    optional = optional
+    |> Keyword.delete(:name)
+    |> Keyword.delete(:loc)
+    |> Keyword.delete(:arguments)
+    |> Keyword.delete(:selectionSet)
+
+    unless length(optional) == 0 do
+      Apex.ap optional
+      raise "unhandled optionals"
+    end
+
+    item
+  end
+
+  defp normalize([{:kind, _ = kind} | _] = item) do
+    item = item
+    |> remove_kind
+    |> Keyword.delete(:loc)
+
+    Enum.map(item,
+      fn {key, value} ->
+        case key do
+          :name -> {:name, to_string(value)}
+          :definitions -> hd normalize(value)
+          :selectionSet -> {:selections, normalize(Keyword.get(value, :selections))}
+          _ -> {key, normalize(value)}
+        end
+      end)
+  end
+
+  defp normalize([hd|tl]) do
+    item = [normalize hd]
+
+    unless length(tl) == 0 do
+      item = item ++ normalize(tl)
+    end
+
+    item
+  end
+
+  defp normalize(item) do
+    item
+  end
+
+  defp remove_kind [{:kind, _ = kind} | _] = item do
+      if kind in [:Document, :OperationDefinition, :SelectionSet] do
+        item = Keyword.delete(item, :kind)
+      end
+
+      item
+  end
+end

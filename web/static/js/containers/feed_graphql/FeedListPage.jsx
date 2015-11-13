@@ -35,11 +35,10 @@ export default createSmartComponent(FeedListGraphqlPage, {
   },
   query: `
     query Feeds($count: Int) {
-      feedList {
-        feeds(count: $count) {
-          id,
-          title
-        }
+      feeds(count: $count) {
+        id,
+        title,
+        author
       }
     }
   `,

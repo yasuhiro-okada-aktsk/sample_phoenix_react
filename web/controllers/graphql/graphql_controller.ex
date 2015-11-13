@@ -2,66 +2,60 @@ defmodule SamplePhoenixReactApp.Graphql.GraphqlController do
   use SamplePhoenixReactApp.Web, :controller
 
   require Logger
+  require SamplePhoenixReactApp.QueryEx
+
+  alias SamplePhoenixReactApp.GraphQlUtils
+  alias SamplePhoenixReactApp.QueryEx
+
+  alias SamplePhoenixReactApp.RssFeed
+  alias SamplePhoenixReactApp.RssEntry
 
   def query(conn, %{"query" => query}) do
-    graphql = GraphQL.parse(query)
+    graphql = GraphQlUtils.parse(query)
 
-    operation = graphql
-    |> Keyword.get(:definitions)
-    |> hd()
-    #Logger.debug Apex.ap operation
-
-    unless Keyword.get(operation, :operation) == :query do
-      raise "unknown operation : #{inspect Keyword.get(operation, :operation)}"
-    end
-
-    variables = Keyword.get(operation, :variableDefinitions)
-    selectionSet = Keyword.get(operation, :selectionSet)
-
-    #Apex.ap variables
-    Logger.debug inspect selectionSet
-    Apex.ap selectionSet
-
-    nomalize_selection selectionSet
+    %{}
+    |> handle_graphql(graphql)
 
     json conn, %{}
   end
 
-  # SelectionSet
-  defp nomalize_selection([kind: :SelectionSet, loc: _, selections: selections]) do
-    Logger.debug "nomalize SelectionSet"
-    Logger.debug inspect selections
-    #Apex.ap selections
+  # query
+  defp handle_graphql(walker, [{:operation, :query} | _] = graphql) do
+    modelSelections = Keyword.get(graphql, :selections)
+    unless length(modelSelections) == 1 do
+      raise "still unsupported : #{inspect modelSelections}"
+    end
 
-    nomalize_selection selections
+    modelSelections = hd(modelSelections)
+
+    model =
+    case Keyword.get(modelSelections, :field) do
+      "feeds" -> RssFeed
+      _ -> raise "unknown model : #{inspect Keyword.get(graphql, :field)}"
+    end
+
+    fieldSelections = Keyword.get(modelSelections, :selections)
+    cols = Enum.map(fieldSelections, &(Keyword.get(&1, :field)))
+
+    Logger.debug inspect cols
+
+    feeds = model
+    |> QueryEx.select(cols)
+    |> Repo.all
+
+    Apex.ap feeds
+
+    walker
   end
 
-  defp nomalize_selection([kind: :Field, loc: _, name: name, selectionSet: selectionSet]) do
-    Logger.debug "nomalize Field"
-    Logger.debug inspect selectionSet
-    #Apex.ap selections
-    nomalize_selection selectionSet
+  defp handle_graphql(walker, [hd|tl]) do
+    # TODO async
+    walker
+    |> handle_graphql(hd)
+    |> handle_graphql(tl)
   end
 
-  defp nomalize_selection([kind: :Field, loc: _, name: name, arguments: arguments, selectionSet: selectionSet]) do
-    Logger.debug "nomalize Field (arguments)"
-    #Apex.ap selections
-  end
-
-  defp nomalize_selection([hd|tl]) do
-    Logger.debug "nomalize list"
-    #Logger.debug inspect hd
-    #Apex.ap hd
-    nomalize_selection hd
-    nomalize_selection tl
-  end
-
-  defp nomalize_selection([]) do
-    # noop
-  end
-
-  defp nomalize_selection(x) do
-    Logger.debug "nomalize unhandled"
-    Logger.debug x
+  defp handle_graphql(walker, []) do
+    walker
   end
 end
