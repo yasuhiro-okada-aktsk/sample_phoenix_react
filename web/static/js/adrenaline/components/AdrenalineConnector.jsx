@@ -52,7 +52,8 @@ export default class AdrenalineConnector extends Component {
   handleChange(props = this.props) {
     this.selectState(props)
       .then(slice => {
-        if (this.hasSliceChanged(props, this.state.slice, slice)) {
+        // TODO !!!!
+        if (!this.hasSliceChanged(props, this.state.slice, slice)) {
           this.setState({slice});
         }
       });
