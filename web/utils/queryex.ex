@@ -1,9 +1,13 @@
-defmodule SamplePhoenixReactApp.QueryEx do
+defmodule QueryEx do
   defmacro select(query, cols) do
-    Ecto.Query.Builder.Select.build(query, [{:f, [], nil}], make_select(cols), __CALLER__)
+    quote do
+      Ecto.Query.Builder.Select.build(unquote(query), [{:f, [], nil}], QueryEx.make_select(unquote(cols)), __ENV__)
+      |> Code.eval_quoted
+      |> elem(0)
+    end
   end
 
-  defp make_select(cols) do
+  def make_select(cols) do
     {:%{}, [], make_col([], cols)}
   end
 

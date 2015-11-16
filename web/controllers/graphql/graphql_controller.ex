@@ -2,10 +2,9 @@ defmodule SamplePhoenixReactApp.Graphql.GraphqlController do
   use SamplePhoenixReactApp.Web, :controller
 
   require Logger
-  require SamplePhoenixReactApp.QueryEx
+  require QueryEx
 
   alias SamplePhoenixReactApp.GraphQlUtils
-  alias SamplePhoenixReactApp.QueryEx
 
   alias SamplePhoenixReactApp.RssFeed
   alias SamplePhoenixReactApp.RssEntry
@@ -13,10 +12,10 @@ defmodule SamplePhoenixReactApp.Graphql.GraphqlController do
   def query(conn, %{"query" => query}) do
     graphql = GraphQlUtils.parse(query)
 
-    %{}
+    json = %{}
     |> handle_graphql(graphql)
 
-    json conn, %{}
+    json conn, json
   end
 
   # query
@@ -45,7 +44,7 @@ defmodule SamplePhoenixReactApp.Graphql.GraphqlController do
 
     Apex.ap feeds
 
-    walker
+    %{data: %{feeds: feeds}}
   end
 
   defp handle_graphql(walker, [hd|tl]) do
