@@ -6,9 +6,13 @@ defmodule SamplePhoenixReactApp.GraphQlUtils do
     normalized = normalize graphql
     
     #Apex.ap graphql
-    Apex.ap normalized
+    #Apex.ap normalized
 
     normalized
+  end
+
+  def test_normalize(graphql) do
+    normalize(graphql)
   end
 
   defp normalize([{:kind, _ = :Field} | _ = optional] = item) do
@@ -23,9 +27,6 @@ defmodule SamplePhoenixReactApp.GraphQlUtils do
       selections = optional
       |> Keyword.get(:selectionSet)
       |> Keyword.get(:selections)
-
-      Logger.error "selections"
-      Apex.ap selections
 
       item = item ++ [{:selections, normalize(selections)}]
     end
@@ -42,6 +43,18 @@ defmodule SamplePhoenixReactApp.GraphQlUtils do
     end
 
     item
+  end
+
+  defp normalize([{:kind, :SelectionSet} | _ = optional] = item) do
+    selections = optional
+    |> Keyword.get(:selections)
+    |> normalize
+  end
+
+  defp normalize([{:kind, :InlineFragment} | _ = optional] = item) do
+    optional
+    |> Keyword.get(:selectionSet)
+    |> normalize
   end
 
   defp normalize([{:kind, _ = kind} | _] = item) do

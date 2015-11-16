@@ -33,7 +33,7 @@ defmodule SamplePhoenixReactApp.Graphql.GraphqlController do
       _ -> raise "unknown model : #{inspect Keyword.get(graphql, :field)}"
     end
 
-    fieldSelections = Keyword.get(modelSelections, :selections)
+    fieldSelections = hd Keyword.get(modelSelections, :selections)
     cols = Enum.map(fieldSelections, &(Keyword.get(&1, :field)))
 
     Logger.debug inspect cols
@@ -41,8 +41,6 @@ defmodule SamplePhoenixReactApp.Graphql.GraphqlController do
     feeds = model
     |> QueryEx.select(cols)
     |> Repo.all
-
-    Apex.ap feeds
 
     %{data: %{feeds: feeds}}
   end

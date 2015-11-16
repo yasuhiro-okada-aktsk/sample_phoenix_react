@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
+import { createDumbComponent } from '../../adrenaline';
 
-export default class Feed extends Component {
+class Feed extends Component {
   static propTypes = {
     feed: PropTypes.object.isRequired,
     onRefresh: PropTypes.func.isRequired
@@ -32,3 +33,14 @@ export default class Feed extends Component {
     );
   }
 }
+
+export default createDumbComponent(Feed, {
+  fragments: {
+    feed: `
+      RssFeed {
+        id,
+        title
+      }
+    `,
+  },
+});

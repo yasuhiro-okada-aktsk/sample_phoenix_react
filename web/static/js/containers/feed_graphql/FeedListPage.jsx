@@ -36,9 +36,7 @@ export default createSmartComponent(FeedListGraphqlPage, {
   query: `
     query Feeds($count: Int) {
       feeds(count: $count) {
-        id,
-        title,
-        author
+        ${Feed.getFragment('feed')}
       }
     }
   `,
