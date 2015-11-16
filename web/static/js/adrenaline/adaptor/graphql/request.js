@@ -10,14 +10,14 @@ export default function request(endpoint, data, files) {
       },
       body: JSON.stringify({
         query: data.query || data.mutation,
-        variables: data.params,
+        variables: data.variables,
       }),
     }).then(parseJSON);
   }
 
   const formData = new FormData();
   formData.append('query', data.mutation);
-  formData.append('variables', JSON.stringify(data.params));
+  formData.append('variables', JSON.stringify(data.variants));
   if (files) {
     for (const filename in files) {
       if (files.hasOwnProperty(filename)) {
