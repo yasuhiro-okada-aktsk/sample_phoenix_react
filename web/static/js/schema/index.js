@@ -32,12 +32,16 @@ const feedType = new GraphQLObjectType({
     id: {
       type: new GraphQLNonNull(GraphQLID),
     },
-    name: {
+    title: {
       type: GraphQLString,
     },
-    author: {
-      type: new GraphQLNonNull(GraphQLString),
-      description: 'author',
+    subtitle: {
+      type: GraphQLString,
+      description: 'subtitle',
+    },
+    summary: {
+      type: GraphQLString,
+      description: 'summary',
     },
     entries: {
       type: new GraphQLList(entryType),
@@ -66,6 +70,11 @@ export const Schema = new GraphQLSchema({
             name: 'count',
             type: GraphQLInt,
           },
+        },
+        resolve: (root, { count }) => {
+          return Object.keys(root.RssFeed).map(key =>
+            root.RssFeed[key]
+          )
         },
       },
     }),

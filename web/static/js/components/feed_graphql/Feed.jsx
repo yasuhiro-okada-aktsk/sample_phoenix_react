@@ -26,7 +26,7 @@ class Feed extends Component {
           {this.props.feed.summary}
         </div>
         <div>
-          <button onClick={::this.handleRefresh} className="btn btn-default">
+          <button onClick={this.handleRefresh.bind(this)} className="btn btn-default">
             <span className="glyphicon glyphicon-refresh" /> Refresh</button>
         </div>
       </div>
@@ -39,7 +39,9 @@ export default createDumbComponent(Feed, {
     feed: `
       RssFeed {
         id,
-        title
+        title,
+        subtitle,
+        summary
       }
     `,
   },

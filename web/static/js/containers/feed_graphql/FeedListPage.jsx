@@ -8,22 +8,30 @@ import Feed from '../../components/feed_graphql/Feed.jsx'
 
 class FeedListGraphqlPage extends Component {
   static propTypes = {
-    feeds: PropTypes.array.isRequired
+    feeds: PropTypes.array.isRequired,
+  };
+
+  static defaultProps = {
+    feeds: [],
   };
 
   handleRefresh(id) {
   }
 
   renderFeed(feed) {
+    //console.log("renderFeed");
     return (
-      <Feed feed={feed} key={feed.id} onRefresh={::this.handleRefresh} />
+      <Feed feed={feed} key={feed.id} onRefresh={this.handleRefresh.bind(this)} />
     );
   }
 
   render() {
+    //console.log("render");
+    const { feeds } = this.props;
+
     return (
       <div>
-        { this.props.feeds.map(::this.renderFeed) }
+        { feeds.map(this.renderFeed.bind(this)) }
       </div>
     );
   }
@@ -34,7 +42,7 @@ export default createSmartComponent(FeedListGraphqlPage, {
     count: 10,
   },
   query: `
-    query Feeds($count: Int) {
+    query Q($count: Int) {
       feeds(count: $count) {
         ${Feed.getFragment('feed')}
       }
