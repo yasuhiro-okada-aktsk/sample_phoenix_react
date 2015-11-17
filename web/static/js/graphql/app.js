@@ -6,6 +6,10 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Relay from 'react-relay';
 
+Relay.injectNetworkLayer(
+  new Relay.DefaultNetworkLayer('/api/v1/graphql')
+);
+
 ReactDOM.render(
   <Relay.RootContainer
     Component={App}
