@@ -31,6 +31,7 @@ defmodule SamplePhoenixReactApp.Router do
     pipe_through :browser # Use the default browser stack
 
     get "/static/*paths", StaticController, :static
+    get "/graphql/*paths", PageGraphqlController, :index
     get "/*paths", PageController, :index
   end
 

@@ -1,3 +1,6 @@
+let dir = require( 'require-dir' );
+dir( './gulp/tasks', { recurse: true } );
+
 import gulp from 'gulp';
 
 let $ = require('gulp-load-plugins')();
@@ -23,7 +26,7 @@ let dirWebJs = dirWebStatic + '/js/rest',
 
 let sourceFile = dirWebJs + '/app.js',
   destFolder = dirDestJs,
-  destFileName = 'rest.js';
+  destJsRest = 'rest.js';
 
 // Styles
 gulp.task('styles', ['sass']);
@@ -61,7 +64,7 @@ bundler.on('log', $.util.log);
 function rebundle() {
   return bundler.bundle()
     .on('error', $.util.log.bind($.util, 'Browserify Error'))
-    .pipe(source(destFileName))
+    .pipe(source(destJsRest))
     .pipe(buffer())
     .pipe(sourcemaps.init({loadMaps: true}))
     .pipe(sourcemaps.write('./'))
@@ -78,7 +81,7 @@ gulp.task('buildScripts', () => {
     transform: [babelify]
   })
     .bundle()
-    .pipe(source(destFileName))
+    .pipe(source(destJsRest))
     .pipe(gulp.dest(dirDestJs));
 });
 
@@ -90,9 +93,9 @@ gulp.task('clean', cb => {
 });
 
 // Bundle
-gulp.task('bundle', ['styles', 'scripts']);
+gulp.task('bundle', ['styles', 'scripts', 'scriptsGraphQl']);
 
-gulp.task('buildBundle', ['styles', 'buildScripts']);
+gulp.task('buildBundle', ['styles', 'buildScripts', 'buildScriptsGraphQl']);
 
 gulp.task('json', () => {
   gulp.src(dirWebJs + '/json/**/*.json', {

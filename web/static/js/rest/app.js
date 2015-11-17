@@ -30,7 +30,7 @@ import { Adrenaline } from './adrenaline';
 
 import Root from './containers/Root';
 import SampleAdaptor from './adaptor';
-import schema from './schema';
+import schema from '../schema';
 
 const adaptor = new SampleAdaptor(schema, "/api/v1/graphql");
 
@@ -40,4 +40,3 @@ render(
   </Adrenaline>,
   document.getElementById('app')
 );
-
