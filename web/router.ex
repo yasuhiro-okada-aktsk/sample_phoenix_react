@@ -22,13 +22,9 @@ defmodule SamplePhoenixReactApp.Router do
 
     resources "/users", UserController
     resources "/feeds", FeedController
-  end
 
-  scope "/graphql", SamplePhoenixReactApp.Graphql do
-    pipe_through [:api]
-
-    get "/", GraphqlController, :query
-    post "/", GraphqlController, :query
+    get "/graphql", GraphqlController, :query
+    post "/graphql", GraphqlController, :query
   end
 
   scope "/", SamplePhoenixReactApp do

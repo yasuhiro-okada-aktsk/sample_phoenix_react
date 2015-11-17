@@ -1,4 +1,4 @@
-defmodule SamplePhoenixReactApp.Graphql.GraphqlController do
+defmodule SamplePhoenixReactApp.Api.V1.GraphqlController do
   use SamplePhoenixReactApp.Web, :controller
 
   require Logger
