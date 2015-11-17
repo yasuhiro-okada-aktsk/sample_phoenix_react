@@ -23,7 +23,7 @@ import "deps/phoenix_html/web/static/js/phoenix_html"
 window.$ = window.jQuery = require('jquery');
 require('bootstrap');
 
-import 'babel-core/polyfill';
+import '../../../../node_modules/babel-core/polyfill';
 import React from 'react';
 import { render } from 'react-dom';
 import { Adrenaline } from './adrenaline';

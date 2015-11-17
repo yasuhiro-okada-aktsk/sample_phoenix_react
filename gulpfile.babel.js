@@ -16,14 +16,14 @@ let dirNode = './node_modules';
 let dirWebStatic = './web/static';
 let dirDestStatic = './priv/static';
 
-let dirWebJs = dirWebStatic + '/js',
+let dirWebJs = dirWebStatic + '/js/rest',
   dirDestJs = dirDestStatic + '/js',
   dirWebCss = dirWebStatic + '/css',
   dirDestCss = dirDestStatic + '/css';
 
 let sourceFile = dirWebJs + '/app.js',
   destFolder = dirDestJs,
-  destFileName = 'app.js';
+  destFileName = 'rest.js';
 
 // Styles
 gulp.task('styles', ['sass']);
@@ -126,7 +126,7 @@ gulp.task('watch', ['bundle', 'assets'], () => {
 });
 
 gulp.task('build', ['buildBundle', 'assets'], () => {
-  gulp.src(dirDestJs + '/app.js')
+  gulp.src(dirDestJs + '/rest.js')
     .pipe($.uglify())
     .pipe($.stripDebug())
     .pipe(gulp.dest(dirDestJs));

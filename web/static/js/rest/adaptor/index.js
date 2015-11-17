@@ -1,6 +1,6 @@
 import 'whatwg-fetch';
-import GraphQLAdaptor from './../adrenaline/adaptor/graphql/GraphQLAdaptor';
-import parseSchema from './../adrenaline/adaptor/graphql/parseSchema';
+import GraphQLAdaptor from '../adrenaline/adaptor/graphql/GraphQLAdaptor';
+import parseSchema from '../adrenaline/adaptor/graphql/parseSchema';
 
 import createCacheStore from './createCacheStore'
 import { finalCreateStore } from './../store/configureStore';

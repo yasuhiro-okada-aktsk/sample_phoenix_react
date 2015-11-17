@@ -18,6 +18,6 @@
 
     </div>
     <div>Ver 0.0.2</div>
-    <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
+    <script src="<%= static_path(@conn, "/js/rest.js") %>"></script>
   </body>
 </html>
