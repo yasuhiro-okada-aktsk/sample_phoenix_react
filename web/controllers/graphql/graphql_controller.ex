@@ -33,7 +33,11 @@ defmodule SamplePhoenixReactApp.Graphql.GraphqlController do
       _ -> raise "unknown model : #{inspect Keyword.get(graphql, :field)}"
     end
 
-    fieldSelections = hd Keyword.get(modelSelections, :selections)
+    fieldSelections = Keyword.get(modelSelections, :selections)
+    if is_list(hd(hd(fieldSelections))) do
+      fieldSelections = hd fieldSelections
+    end
+
     cols = Enum.map(fieldSelections, &(Keyword.get(&1, :field)))
 
     Logger.debug inspect cols
