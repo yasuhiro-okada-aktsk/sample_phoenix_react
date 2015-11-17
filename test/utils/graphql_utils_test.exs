@@ -52,4 +52,14 @@ defmodule SamplePhoenixReactApp.GraphQlUtilsTest do
 
     assert normalized == [[field: "test1"], [field: "test2"]]
   end
+
+  test "normalize_debug" do
+    graphql = [
+      [kind: :Field, loc: [], name: 'test1'],
+      [kind: :Field, loc: [], name: 'test2']
+    ]
+    normalized = GraphQlUtils.test_normalize_debug graphql
+
+    assert normalized == [[kind: :Field, name: "test1"], [kind: :Field, name: "test2"]]
+  end
 end
