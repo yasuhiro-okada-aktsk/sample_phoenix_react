@@ -19,7 +19,7 @@ defmodule SamplePhoenixReactApp.Mixfile do
   def application do
     [mod: {SamplePhoenixReactApp, []},
      applications: [:phoenix, :phoenix_html, :cowboy, :logger, :httpoison,
-                    :phoenix_ecto, :mariaex, :timex, :tzdata]]
+                    :phoenix_ecto, :mariaex, :timex, :tzdata, :graphql, :apex]]
   end
 
   # Specifies which paths to compile per environment.
@@ -42,6 +42,8 @@ defmodule SamplePhoenixReactApp.Mixfile do
      {:feeder_ex, ">= 0.0.0"},
      {:timex, "~> 0.19.5"},
      {:timex_ecto, "~> 0.5.0"},
+     {:graphql, "~> 0.0.2"},
+     {:apex, "~>0.3.2"},
      {:exrm, "~> 0.19.9"}]
   end
 

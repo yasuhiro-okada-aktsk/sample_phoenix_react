@@ -6,7 +6,12 @@ Phoenix + React のサンプル
   * 基本的には、SPA用のjsを読み込むページが表示され、jsでルーティングする。
 * /static以下は、SPA用のjsが読み込まれないようにする。
 
+# 機能
+
+RSS リーダー
+
 ## To do
+1. graphql test
 1. ogp meta data
 1. test (react / phoenix)
 1. redux
