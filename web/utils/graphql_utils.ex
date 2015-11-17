@@ -1,6 +1,8 @@
 defmodule SamplePhoenixReactApp.GraphQlUtils do
   require Logger
 
+  import SamplePhoenixReactApp.GraphQl.Debug
+
   def parse(query) do
     graphql = GraphQL.parse(query)
     normalized = normalize graphql
@@ -20,28 +22,7 @@ defmodule SamplePhoenixReactApp.GraphQlUtils do
     normalize_debug(graphql)
   end
 
-  ## for debug
-  defp normalize_debug([{:kind, _ = kind} | _ = optional] = item) do
-    item = item
-    |> Keyword.delete(:loc)
-
-    Enum.map(item,
-      fn {key, value} ->
-        case key do
-          :name -> { :name, to_string(value) }
-          _ -> { key, normalize_debug(value) }
-        end
-      end)
-  end
-
-  defp normalize_debug([hd|tl]) do
-    [normalize_debug(hd)| normalize_debug(tl)]
-  end
-
-  defp normalize_debug(item) do
-    item
-  end
-
+  # normalize
   defp normalize([{:kind, _ = :Field} | _ = optional] = item) do
     item = [{:field, to_string(Keyword.get(item, :name))}]
 
