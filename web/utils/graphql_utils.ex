@@ -2,10 +2,13 @@ defmodule SamplePhoenixReactApp.GraphQlUtils do
   require Logger
 
   import SamplePhoenixReactApp.GraphQl.Debug
+  import SamplePhoenixReactApp.GraphQl.Fragment
 
   def parse(query) do
     graphql = GraphQL.parse(query)
-    normalized = normalize graphql
+    normalized = graphql
+    |> spread()
+    |> normalize()
 
     #Logger.debug inspect graphql
     #Apex.ap graphql
