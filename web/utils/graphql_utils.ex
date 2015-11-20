@@ -7,6 +7,7 @@ defmodule SamplePhoenixReactApp.GraphQlUtils do
     graphql = GraphQL.parse(query)
     normalized = normalize graphql
 
+    #Logger.debug inspect graphql
     #Apex.ap graphql
     Apex.ap normalize_debug graphql
     #Apex.ap normalized
@@ -16,10 +17,6 @@ defmodule SamplePhoenixReactApp.GraphQlUtils do
 
   def test_normalize(graphql) do
     normalize(graphql)
-  end
-
-  def test_normalize_debug(graphql) do
-    normalize_debug(graphql)
   end
 
   # normalize
