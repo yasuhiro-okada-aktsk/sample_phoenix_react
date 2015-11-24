@@ -4,7 +4,8 @@ defmodule SamplePhoenixReactApp.GraphQl.Fragment do
   def spread(graphql) do
     graphql
     |> collect_fragment
-    |> spread_item graphql
+    |> spread_item(graphql)
+
   end
 
   defp spread_item(fragments, [{:kind, :FragmentSpread} | _] = item) do

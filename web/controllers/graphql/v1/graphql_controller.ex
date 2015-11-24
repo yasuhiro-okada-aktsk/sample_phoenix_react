@@ -16,6 +16,15 @@ defmodule SamplePhoenixReactApp.Api.V1.GraphqlController do
     |> handle_graphql(graphql)
 
     json conn, json
+
+#    json conn, %{"data" =>
+#      %{"feedList" =>
+#        %{ "feeds" => [
+#          %{"id" => "1", "title" => "title1", "subtitle" => "subtitle1", "summary" => "summary1"},
+#          %{"id" => "2", "title" => "title1", "subtitle" => "subtitle1", "summary" => "summary1"}
+#        ]}
+#      }
+#    }
   end
 
   # query
@@ -46,7 +55,7 @@ defmodule SamplePhoenixReactApp.Api.V1.GraphqlController do
     |> QueryEx.select(cols)
     |> Repo.all
 
-    %{data: %{feeds: feeds}}
+    %{data: %{feedList: %{feeds: feeds}}}
   end
 
   defp handle_graphql(walker, [hd|tl]) do

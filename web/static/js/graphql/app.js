@@ -1,6 +1,6 @@
 import 'babel/polyfill';
 
-import App from './components/App';
+import FeedList from './components/FeedList.jsx';
 import AppHomeRoute from './routes/AppHomeRoute';
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -12,7 +12,7 @@ Relay.injectNetworkLayer(
 
 ReactDOM.render(
   <Relay.RootContainer
-    Component={App}
+    Component={FeedList}
     route={new AppHomeRoute()}
   />,
   document.getElementById('app')
