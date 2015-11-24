@@ -1,0 +1,10 @@
+engines:
+  eslint:
+    enabled: true
+  csslint:
+    enabled: true
+ratings:
+   paths:
+   - web/**
+exclude_paths:
+- "test/*"
