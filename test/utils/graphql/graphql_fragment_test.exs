@@ -40,4 +40,55 @@ defmodule SamplePhoenixReactApp.GraphQl.FragmentTest do
 
     assert spreaded == [["spreaded"],nil]
   end
+
+  test "spread2" do
+    graphql = [
+      [kind: :FragmentSpread, loc: [], name: 'frag1'],
+      [kind: :FragmentSpread, loc: [], name: 'frag2'],
+      [kind: :FragmentDefinition, loc: [], name: 'frag1', selectionSet: ["spreaded"]],
+      [kind: :FragmentDefinition, loc: [], name: 'frag2', selectionSet: ["spreaded2"]]
+    ]
+    spreaded = GraphQl.Fragment.spread(graphql)
+
+    assert spreaded == [["spreaded"],["spreaded2"],nil,nil]
+  end
+
+  test "spread3" do
+    graphql = [
+      [kind: :FragmentSpread, loc: [], name: 'frag1'],
+      [kind: :FragmentDefinition, loc: [], name: 'frag1', selectionSet: [[kind: :FragmentSpread, loc: [], name: 'frag2']]],
+      [kind: :FragmentDefinition, loc: [], name: 'frag2', selectionSet: ["spreaded2"]]
+    ]
+    spreaded = GraphQl.Fragment.spread(graphql)
+
+    assert spreaded == [[["spreaded2"]],nil,nil]
+  end
+
+  test "has fragment (no fragment)" do
+    graphql = [
+      [kind: :FragmentDefinition, loc: [], name: 'frag1', selectionSet: ["spreaded"]],
+      [kind: :FragmentDefinition, loc: [], name: 'frag2', selectionSet: ["spreaded2"]]
+    ]
+
+    assert not GraphQl.Fragment.has_fragment(graphql)
+  end
+
+  test "has fragment" do
+    graphql = [
+      [kind: :FragmentSpread, loc: [], name: 'frag1'],
+      [kind: :FragmentDefinition, loc: [], name: 'frag1', selectionSet: ["spreaded"]],
+      [kind: :FragmentDefinition, loc: [], name: 'frag2', selectionSet: ["spreaded2"]]
+    ]
+
+    assert GraphQl.Fragment.has_fragment(graphql)
+  end
+
+  test "has fragment2" do
+    graphql = [
+      [kind: :FragmentDefinition, loc: [], name: 'frag1', selectionSet: [[kind: :FragmentSpread, loc: [], name: 'frag2']]],
+      [kind: :FragmentDefinition, loc: [], name: 'frag2', selectionSet: ["spreaded2"]]
+    ]
+
+    assert GraphQl.Fragment.has_fragment(graphql)
+  end
 end

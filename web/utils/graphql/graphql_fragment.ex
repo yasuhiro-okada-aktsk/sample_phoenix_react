@@ -5,7 +5,10 @@ defmodule SamplePhoenixReactApp.GraphQl.Fragment do
     graphql
     |> collect_fragment
     |> spread_item(graphql)
+  end
 
+  defp spread(fragments, graphql) do
+    spreaded = spread_item(fragments, graphql)
   end
 
   defp spread_item(fragments, [{:kind, :FragmentSpread} | _] = item) do
@@ -64,6 +67,32 @@ defmodule SamplePhoenixReactApp.GraphQl.Fragment do
   end
 
   defp collect_fragment(visitor, item) do
+    visitor
+  end
+
+  def has_fragment(graphql) do
+    has_fragment(false, graphql)
+  end
+
+  defp has_fragment(visitor, [{:kind, :FragmentSpread} | _]) do
+    true
+  end
+
+  defp has_fragment(visitor, [{:kind, _} | _] = item) do
+    item
+    |> Enum.reduce(visitor,
+            fn ({key, value}, visitor) ->
+              has_fragment(visitor, value)
+            end)
+  end
+
+  defp has_fragment(visitor, [hd|tl]) do
+    visitor
+    |> has_fragment(hd)
+    |> has_fragment(tl)
+  end
+
+  defp has_fragment(visitor, _) do
     visitor
   end
 end
