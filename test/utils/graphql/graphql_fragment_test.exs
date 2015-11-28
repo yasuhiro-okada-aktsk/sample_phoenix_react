@@ -33,35 +33,45 @@ defmodule SamplePhoenixReactApp.GraphQlAst.FragmentTest do
 
   test "spread" do
     graphql = [
-      [kind: :FragmentSpread, loc: [], name: 'frag1'],
-      [kind: :FragmentDefinition, loc: [], name: 'frag1', selectionSet: ["spreaded"]]
+      [kind: :FragmentDefinition, name: "f", selectionSet: [selections: ["s1", "s2"]]],
+      [kind: :FragmentSpread, name: "f"]
     ]
     spreaded = GraphQlAst.Fragment.spread(graphql)
 
-    assert spreaded == [["spreaded"],nil]
+    assert spreaded == [nil, "s1", "s2"]
   end
 
   test "spread2" do
     graphql = [
-      [kind: :FragmentSpread, loc: [], name: 'frag1'],
-      [kind: :FragmentSpread, loc: [], name: 'frag2'],
-      [kind: :FragmentDefinition, loc: [], name: 'frag1', selectionSet: ["spreaded"]],
-      [kind: :FragmentDefinition, loc: [], name: 'frag2', selectionSet: ["spreaded2"]]
+      [kind: :FragmentDefinition, name: "f", selectionSet: [selections: ["s1", "s2"]]],
+      ["a1", "a2", [kind: :FragmentSpread, name: "f"]]
     ]
     spreaded = GraphQlAst.Fragment.spread(graphql)
 
-    assert spreaded == [["spreaded"],["spreaded2"],nil,nil]
+    assert spreaded == [nil, ["a1", "a2", "s1", "s2"]]
   end
 
   test "spread3" do
     graphql = [
       [kind: :FragmentSpread, loc: [], name: 'frag1'],
-      [kind: :FragmentDefinition, loc: [], name: 'frag1', selectionSet: [[kind: :FragmentSpread, loc: [], name: 'frag2']]],
-      [kind: :FragmentDefinition, loc: [], name: 'frag2', selectionSet: ["spreaded2"]]
+      [kind: :FragmentSpread, loc: [], name: 'frag2'],
+      [kind: :FragmentDefinition, loc: [], name: 'frag1', selectionSet: [selections: ["spreaded"]]],
+      [kind: :FragmentDefinition, loc: [], name: 'frag2', selectionSet: [selections: ["spreaded2"]]]
     ]
     spreaded = GraphQlAst.Fragment.spread(graphql)
 
-    assert spreaded == [[["spreaded2"]],nil,nil]
+    assert spreaded == ["spreaded","spreaded2",nil,nil]
+  end
+
+  test "spread4" do
+    graphql = [
+      [kind: :FragmentSpread, loc: [], name: 'frag1'],
+      [kind: :FragmentDefinition, loc: [], name: 'frag1', selectionSet: [selections: [[kind: :FragmentSpread, loc: [], name: 'frag2']]]],
+      [kind: :FragmentDefinition, loc: [], name: 'frag2', selectionSet: [selections: ["s1", "s2"]]]
+    ]
+    spreaded = GraphQlAst.Fragment.spread(graphql)
+
+    assert spreaded == ["s1", "s2"]
   end
 
   test "has fragment (no fragment)" do

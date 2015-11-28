@@ -1,6 +1,15 @@
 defmodule SamplePhoenixReactApp.GraphQlAst.Fragment do
   require Logger
 
+  @moduledoc '''
+  [kind: :FragmentDefinition, name: "f", selectionSet: [selections: ["s1", "s2"]]],
+  [kind: :FragmentSpread, name: "f"]
+  => ["s1", "s2"]
+
+  [kind: :FragmentDefinition, name: "f", selectionSet: [selections: ["s1", "s2"]]],
+  ["a1", "a2", [kind: :FragmentSpread, name: "f"]]
+  => ["a1", "a2", "s1", "s2"]
+  '''
   def spread(graphql) do
     graphql
     |> collect_fragment
@@ -25,6 +34,7 @@ defmodule SamplePhoenixReactApp.GraphQlAst.Fragment do
     fragments
     |> Map.get(name)
     |> Keyword.get(:selectionSet)
+    |> Keyword.get(:selections)
   end
 
   defp spread_item(fragments, [{:kind, :FragmentDefinition} | _]) do
@@ -37,6 +47,11 @@ defmodule SamplePhoenixReactApp.GraphQlAst.Fragment do
       fn {key, value} ->
         { key, spread_item(fragments, value) }
       end)
+  end
+
+  defp spread_item(fragments, [[{:kind, :FragmentSpread} | _] = hd|tl]) do
+    spread_item(fragments, hd)
+    |> List.flatten spread_item(fragments, tl)
   end
 
   defp spread_item(fragments, [hd|tl]) do
