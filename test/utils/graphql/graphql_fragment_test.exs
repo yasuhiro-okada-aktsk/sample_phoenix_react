@@ -1,14 +1,14 @@
-defmodule SamplePhoenixReactApp.GraphQl.FragmentTest do
+defmodule SamplePhoenixReactApp.GraphQlAst.FragmentTest do
   use ExUnit.Case, async: true
 
-  alias SamplePhoenixReactApp.GraphQl
+  alias SamplePhoenixReactApp.GraphQlAst
 
   test "collect none" do
     graphql = [
       [kind: :Field, loc: [], name: 'test1'],
       [kind: :Field, loc: [], name: 'test2']
     ]
-    fragments = GraphQl.Fragment.collect_fragment(graphql)
+    fragments = GraphQlAst.Fragment.collect_fragment(graphql)
 
     assert fragments == %{}
   end
@@ -25,7 +25,7 @@ defmodule SamplePhoenixReactApp.GraphQl.FragmentTest do
       name: 'title'], [kind: :Field, loc: [start: 0], name: 'subtitle'], [kind: :Field, loc: [start: 0],
       name: 'summary']]]]]]
 
-    fragments = GraphQl.Fragment.collect_fragment(graphql)
+    fragments = GraphQlAst.Fragment.collect_fragment(graphql)
 
     assert map_size(fragments) == 1
     assert Map.get(fragments, "__RelayQueryFragment024i1nd") != nil
@@ -36,7 +36,7 @@ defmodule SamplePhoenixReactApp.GraphQl.FragmentTest do
       [kind: :FragmentSpread, loc: [], name: 'frag1'],
       [kind: :FragmentDefinition, loc: [], name: 'frag1', selectionSet: ["spreaded"]]
     ]
-    spreaded = GraphQl.Fragment.spread(graphql)
+    spreaded = GraphQlAst.Fragment.spread(graphql)
 
     assert spreaded == [["spreaded"],nil]
   end
@@ -48,7 +48,7 @@ defmodule SamplePhoenixReactApp.GraphQl.FragmentTest do
       [kind: :FragmentDefinition, loc: [], name: 'frag1', selectionSet: ["spreaded"]],
       [kind: :FragmentDefinition, loc: [], name: 'frag2', selectionSet: ["spreaded2"]]
     ]
-    spreaded = GraphQl.Fragment.spread(graphql)
+    spreaded = GraphQlAst.Fragment.spread(graphql)
 
     assert spreaded == [["spreaded"],["spreaded2"],nil,nil]
   end
@@ -59,7 +59,7 @@ defmodule SamplePhoenixReactApp.GraphQl.FragmentTest do
       [kind: :FragmentDefinition, loc: [], name: 'frag1', selectionSet: [[kind: :FragmentSpread, loc: [], name: 'frag2']]],
       [kind: :FragmentDefinition, loc: [], name: 'frag2', selectionSet: ["spreaded2"]]
     ]
-    spreaded = GraphQl.Fragment.spread(graphql)
+    spreaded = GraphQlAst.Fragment.spread(graphql)
 
     assert spreaded == [[["spreaded2"]],nil,nil]
   end
@@ -70,7 +70,7 @@ defmodule SamplePhoenixReactApp.GraphQl.FragmentTest do
       [kind: :FragmentDefinition, loc: [], name: 'frag2', selectionSet: ["spreaded2"]]
     ]
 
-    assert not GraphQl.Fragment.has_fragment(graphql)
+    assert not GraphQlAst.Fragment.has_fragment(graphql)
   end
 
   test "has fragment" do
@@ -80,7 +80,7 @@ defmodule SamplePhoenixReactApp.GraphQl.FragmentTest do
       [kind: :FragmentDefinition, loc: [], name: 'frag2', selectionSet: ["spreaded2"]]
     ]
 
-    assert GraphQl.Fragment.has_fragment(graphql)
+    assert GraphQlAst.Fragment.has_fragment(graphql)
   end
 
   test "has fragment2" do
@@ -89,6 +89,6 @@ defmodule SamplePhoenixReactApp.GraphQl.FragmentTest do
       [kind: :FragmentDefinition, loc: [], name: 'frag2', selectionSet: ["spreaded2"]]
     ]
 
-    assert GraphQl.Fragment.has_fragment(graphql)
+    assert GraphQlAst.Fragment.has_fragment(graphql)
   end
 end

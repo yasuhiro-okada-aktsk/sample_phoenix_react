@@ -4,27 +4,29 @@ defmodule SamplePhoenixReactApp.Api.V1.GraphqlController do
   require Logger
   require QueryEx
 
-  alias SamplePhoenixReactApp.GraphQlUtils
+  alias SamplePhoenixReactApp.GraphQlAst
 
   alias SamplePhoenixReactApp.RssFeed
   alias SamplePhoenixReactApp.RssEntry
 
   def query(conn, %{"query" => query}) do
-    graphql = GraphQlUtils.parse(query)
+    graphql = GraphQlAst.parse(query)
 
     json = %{}
-    |> handle_graphql(graphql)
+    #|> handle_graphql(graphql)
 
-    json conn, json
+    #json conn, json
 
-#    json conn, %{"data" =>
-#      %{"feedList" =>
-#        %{ "feeds" => [
-#          %{"id" => "1", "title" => "title1", "subtitle" => "subtitle1", "summary" => "summary1"},
-#          %{"id" => "2", "title" => "title1", "subtitle" => "subtitle1", "summary" => "summary1"}
-#        ]}
-#      }
-#    }
+    json conn, %{"data" =>
+      %{"feedList" =>
+        %{ "id" => "1",
+          "feeds" => [
+            %{"id" => "1", "title" => "title1", "subtitle" => "subtitle1", "summary" => "summary1"},
+            %{"id" => "2", "title" => "title1", "subtitle" => "subtitle1", "summary" => "summary1"}
+          ]
+        }
+      }
+    }
   end
 
   # query

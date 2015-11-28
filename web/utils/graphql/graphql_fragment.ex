@@ -1,4 +1,4 @@
-defmodule SamplePhoenixReactApp.GraphQl.Fragment do
+defmodule SamplePhoenixReactApp.GraphQlAst.Fragment do
   require Logger
 
   def spread(graphql) do

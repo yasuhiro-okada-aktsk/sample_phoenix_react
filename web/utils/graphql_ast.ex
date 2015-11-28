@@ -1,19 +1,19 @@
-defmodule SamplePhoenixReactApp.GraphQlUtils do
+defmodule SamplePhoenixReactApp.GraphQlAst do
   require Logger
 
-  import SamplePhoenixReactApp.GraphQl.Debug
-  import SamplePhoenixReactApp.GraphQl.Fragment
+  import SamplePhoenixReactApp.GraphQlAst.Debug
+  import SamplePhoenixReactApp.GraphQlAst.Fragment
 
   def parse(query) do
     graphql = GraphQL.parse(query)
     normalized = graphql
     |> spread()
-    |> normalize()
+    #|> normalize()
 
     #Logger.debug inspect graphql
     #Apex.ap graphql
-    Apex.ap normalize_debug graphql
-    #Apex.ap normalized
+    #Apex.ap normalize_debug graphql
+    #Apex.ap normalize_debug normalized
 
     normalized
   end

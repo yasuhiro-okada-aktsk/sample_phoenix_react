@@ -1,4 +1,4 @@
-defmodule SamplePhoenixReactApp.GraphQl.Debug do
+defmodule SamplePhoenixReactApp.GraphQlAst.Debug do
   require Logger
 
   ## for debug
