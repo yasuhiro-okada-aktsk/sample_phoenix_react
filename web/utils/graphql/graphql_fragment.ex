@@ -32,7 +32,8 @@ defmodule SamplePhoenixReactApp.GraphQlAst.Fragment do
   end
 
   defp spread_item(fragments, [{:kind, _} | _] = item) do
-    Enum.map(item,
+    item
+    |> Enum.map(
       fn {key, value} ->
         { key, spread_item(fragments, value) }
       end)

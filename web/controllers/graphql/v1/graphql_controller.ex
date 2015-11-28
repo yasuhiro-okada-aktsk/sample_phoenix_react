@@ -19,8 +19,7 @@ defmodule SamplePhoenixReactApp.Api.V1.GraphqlController do
 
     json conn, %{"data" =>
       %{"feedList" =>
-        %{ "id" => "1",
-          "feeds" => [
+        %{ "feeds" => [
             %{"id" => "1", "title" => "title1", "subtitle" => "subtitle1", "summary" => "summary1"},
             %{"id" => "2", "title" => "title1", "subtitle" => "subtitle1", "summary" => "summary1"}
           ]

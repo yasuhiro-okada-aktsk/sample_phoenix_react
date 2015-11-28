@@ -3,13 +3,13 @@ defmodule SamplePhoenixReactApp.GraphQlAst.DebugTest do
 
   alias SamplePhoenixReactApp.GraphQlAst
 
-  test "normalize_debug" do
+  test "clean" do
     graphql = [
       [kind: :Field, loc: [], name: 'test1'],
       [kind: :Field, loc: [], name: 'test2']
     ]
-    normalized = GraphQlAst.Debug.normalize_debug graphql
+    cleaned = GraphQlAst.Clean.clean graphql
 
-    assert normalized == [[kind: :Field, name: "test1"], [kind: :Field, name: "test2"]]
+    assert cleaned == [[kind: :Field, name: "test1"], [kind: :Field, name: "test2"]]
   end
 end
