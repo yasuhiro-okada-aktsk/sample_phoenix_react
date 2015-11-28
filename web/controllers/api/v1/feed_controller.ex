@@ -45,7 +45,9 @@ defmodule SamplePhoenixReactApp.Api.V1.FeedController do
         model = %RssFeed{}
       end
 
-      feed = SamplePhoenixReactApp.RssFetcher.fetch(feed_url)
+      feed = feed_url
+      |> String.strip
+      |> SamplePhoenixReactApp.RssFetcher.fetch
 
       params =  Map.delete(feed, :__struct__) |> Map.put(:feed_url, feed_url) |> Map.put(:feed_id, feed.id)
       if params.updated do

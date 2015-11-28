@@ -23,16 +23,16 @@ import "deps/phoenix_html/web/static/js/phoenix_html"
 window.$ = window.jQuery = require('jquery');
 require('bootstrap');
 
-import 'babel-core/polyfill';
+import '../../../../node_modules/babel-core/polyfill';
 import React from 'react';
 import { render } from 'react-dom';
 import { Adrenaline } from './adrenaline';
 
 import Root from './containers/Root';
 import SampleAdaptor from './adaptor';
-import schema from './schema';
+import schema from '../schema';
 
-const adaptor = new SampleAdaptor(schema);
+const adaptor = new SampleAdaptor(schema, "/api/v1/graphql");
 
 render(
   <Adrenaline adaptor={adaptor} >
@@ -40,4 +40,3 @@ render(
   </Adrenaline>,
   document.getElementById('app')
 );
-

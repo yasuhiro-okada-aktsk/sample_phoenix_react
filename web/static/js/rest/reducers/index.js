@@ -38,7 +38,6 @@ let feeds = handleActions({
   )
 },  []);
 
-
 const rootReducer = {
   auth,
   feeds,

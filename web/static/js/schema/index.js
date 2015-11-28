@@ -59,30 +59,44 @@ const feedType = new GraphQLObjectType({
   }),
 });
 
+const feedListType = new GraphQLObjectType({
+  name: 'RssFeedList',
+  description: 'RssFeedList type',
+  fields: () => ({
+    sample: {
+      type: GraphQLString,
+    },
+    feeds: {
+      type: new GraphQLList(feedType),
+      args: {
+        count: {
+          name: 'count',
+          type: GraphQLInt,
+        },
+      },
+      resolve: (root, { count }) => {
+        return Object.keys(root.RssFeed).map(key => {
+            return root.RssFeed[key]
+          }
+        )
+      },
+    },
+  }),
+});
+
 export const Schema = new GraphQLSchema({
   query: new GraphQLObjectType({
     name: 'Query',
     fields: () => ({
-      feeds: {
-        type: new GraphQLList(feedType),
-        args: {
-          count: {
-            name: 'count',
-            type: GraphQLInt,
-          },
-        },
-        resolve: (root, { count }) => {
-          return Object.keys(root.RssFeed).map(key =>
-            root.RssFeed[key]
-          )
-        },
+      feedList: {
+        type: feedListType,
       },
     }),
   }),
   mutation: new GraphQLObjectType({
     name: 'Mutation',
     fields: () => ({
-      createTodo: {
+      addFeed: {
         type: feedType,
         args: {
           url: {
