@@ -3,18 +3,19 @@ defmodule SamplePhoenixReactApp.GraphQlAst do
 
   import SamplePhoenixReactApp.GraphQlAst.Fragment
   import SamplePhoenixReactApp.GraphQlAst.Clean
+  import SamplePhoenixReactApp.GraphQlAst.Fields
 
   def parse(query) do
     graphql = GraphQL.parse(query)
     normalized = graphql
     |> clean()
     |> spread()
+    |> remove_duplicated()
     |> normalize()
 
     #Logger.debug inspect graphql
     #Apex.ap graphql
-    #Apex.ap normalize_debug graphql
-    #Apex.ap normalize_debug normalized
+    #Apex.ap normalized
 
     normalized
   end
@@ -48,7 +49,7 @@ defmodule SamplePhoenixReactApp.GraphQlAst do
 
     unless length(optional) == 0 do
       Apex.ap optional
-      raise "unhandled optionals"
+      raise "unhandled optionals : " <> inspect(optional)
     end
 
     item
