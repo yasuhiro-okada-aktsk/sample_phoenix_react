@@ -50,8 +50,7 @@ defmodule SamplePhoenixReactApp.GraphQlAst.Fragment do
   end
 
   defp spread_item(fragments, [[{:kind, :FragmentSpread} | _] = hd|tl]) do
-    spread_item(fragments, hd)
-    |> List.flatten spread_item(fragments, tl)
+    spread_item(fragments, hd) ++ spread_item(fragments, tl)
   end
 
   defp spread_item(fragments, [hd|tl]) do
@@ -103,8 +102,12 @@ defmodule SamplePhoenixReactApp.GraphQlAst.Fragment do
   defp has_fragment(visitor, [{:kind, _} | _] = item) do
     item
     |> Enum.reduce(visitor,
-            fn ({key, value}, visitor) ->
-              has_fragment(visitor, value)
+            fn (el, visitor) ->
+              unless is_nil(el) do
+                {_, value} = el
+                visitor = has_fragment(visitor, value)
+              end
+              visitor
             end)
   end
 

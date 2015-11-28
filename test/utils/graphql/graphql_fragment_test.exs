@@ -71,7 +71,17 @@ defmodule SamplePhoenixReactApp.GraphQlAst.FragmentTest do
     ]
     spreaded = GraphQlAst.Fragment.spread(graphql)
 
-    assert spreaded == ["s1", "s2"]
+    assert spreaded == ["s1", "s2", nil, nil]
+  end
+
+  test "spread5" do
+    graphql = [
+      [[kind: :Field, name: 'x1'], [kind: :FragmentSpread, name: 'f1']],
+      [kind: :FragmentDefinition, name: 'f1', selectionSet: [selections: [[kind: :Field, name: 'a1'], [kind: :Field, name: 'a2'], [kind: :Field, name: 'a3'] ]]],
+    ]
+    spreaded = GraphQlAst.Fragment.spread(graphql)
+
+    assert spreaded == [[[kind: :Field, name: 'x1'], [kind: :Field, name: 'a1'], [kind: :Field, name: 'a2'], [kind: :Field, name: 'a3']], nil]
   end
 
   test "has fragment (no fragment)" do
