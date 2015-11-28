@@ -1,4 +1,4 @@
-import merge from '../../../../../node_modules/lodash/object/merge';
+import merge from 'lodash/object/merge';
 import { routerStateReducer as router } from 'redux-router';
 import { handleActions } from 'redux-actions'
 
@@ -37,7 +37,6 @@ let feeds = handleActions({
     action.payload ? action.payload : state
   )
 },  []);
-
 
 const rootReducer = {
   auth,
