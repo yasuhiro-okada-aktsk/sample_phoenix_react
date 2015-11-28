@@ -13,50 +13,26 @@ defmodule SamplePhoenixReactApp.Api.V1.GraphqlController do
     graphql = GraphQlAst.parse(query)
 
     json = %{}
-    #|> handle_graphql(graphql)
+    |> handle_graphql(graphql)
 
-    #json conn, json
+    json conn, json
 
-    json conn, %{"data" =>
-      %{"feedList" =>
-        %{ "feeds" => [
-            %{"id" => "1", "title" => "title1", "subtitle" => "subtitle1", "summary" => "summary1"},
-            %{"id" => "2", "title" => "title1", "subtitle" => "subtitle1", "summary" => "summary1"}
-          ]
-        }
-      }
-    }
+#    json conn, %{"data" =>
+#      %{"feedList" =>
+#        %{ "feeds" => [
+#            %{"id" => "1", "title" => "title1", "subtitle" => "subtitle1", "summary" => "summary1"},
+#            %{"id" => "2", "title" => "title1", "subtitle" => "subtitle1", "summary" => "summary1"}
+#          ]
+#        }
+#      }
+#    }
   end
 
   # query
   defp handle_graphql(walker, [{:operation, :query} | _] = graphql) do
     modelSelections = Keyword.get(graphql, :selections)
-    unless length(modelSelections) == 1 do
-      raise "still unsupported : #{inspect modelSelections}"
-    end
 
-    modelSelections = hd(modelSelections)
-
-    model =
-    case Keyword.get(modelSelections, :field) do
-      "feeds" -> RssFeed
-      _ -> raise "unknown model : #{inspect Keyword.get(graphql, :field)}"
-    end
-
-    fieldSelections = Keyword.get(modelSelections, :selections)
-    if is_list(hd(hd(fieldSelections))) do
-      fieldSelections = hd fieldSelections
-    end
-
-    cols = Enum.map(fieldSelections, &(Keyword.get(&1, :field)))
-
-    Logger.debug inspect cols
-
-    feeds = model
-    |> QueryEx.select(cols)
-    |> Repo.all
-
-    %{data: %{feedList: %{feeds: feeds}}}
+    %{data: query_model(modelSelections)}
   end
 
   defp handle_graphql(walker, [hd|tl]) do
@@ -68,5 +44,37 @@ defmodule SamplePhoenixReactApp.Api.V1.GraphqlController do
 
   defp handle_graphql(walker, []) do
     walker
+  end
+
+  defp query_model([field: "feedList", selections: _ = selections]) do
+    %{feedList: query_model(selections)}
+  end
+
+  defp query_model([field: "feeds", selections: _ = selections]) do
+#    if is_list(hd(hd(selections))) do
+#      selections = hd selections
+#    end
+
+    cols = Enum.map(selections, &(Keyword.get(&1, :field)))
+
+    feeds = RssFeed
+    |> QueryEx.select(cols)
+    |> Repo.all
+    # id を文字にする
+    |> Enum.map(
+      fn feed ->
+        Map.update!(feed, :id, &to_string(&1))
+      end)
+
+    %{feeds: feeds}
+  end
+
+  defp query_model([hd|tl]) do
+    query_model(hd)
+    |> Map.merge query_model(tl)
+  end
+
+  defp query_model([]) do
+    %{}
   end
 end
