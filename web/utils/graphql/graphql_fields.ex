@@ -6,11 +6,21 @@ defmodule SamplePhoenixReactApp.GraphQlAst.Fields do
     => [kind: SelectionSet, selections: [[kind: Field, name: "a1"], [kind: Field, name: "a2"]]]
   '''
   def remove_duplicated([{:kind, _} | _] = item) do
-    if Keyword.has_key?(item, :selections) do
-      item = item
-      |> Keyword.update!(:sections, &walk(MapSet.new(), &1))
-    end
+    item
+    |> Enum.map(
+      fn {key, value} ->
+        case key do
+          :selections -> {key, walk(MapSet.new(), value)}
+          _-> { key, remove_duplicated(value) }
+        end
+      end)
+  end
 
+  def remove_duplicated([hd|tl]) do
+    [remove_duplicated(hd)|remove_duplicated(tl)]
+  end
+
+  def remove_duplicated(item) do
     item
   end
 
@@ -20,10 +30,15 @@ defmodule SamplePhoenixReactApp.GraphQlAst.Fields do
     name = Keyword.get(hd, :name)
     unless MapSet.member?(walker, name) do
       walker = MapSet.put(walker, name)
-      result = hd
+      result = [remove_duplicated(hd)]
     end
 
-    result ++ walk(walker, tl)
+    tl = walk(walker, tl)
+    unless length(tl) == 0 do
+      result = result ++ tl
+    end
+
+    result
   end
 
   defp walk( walker, item) do
