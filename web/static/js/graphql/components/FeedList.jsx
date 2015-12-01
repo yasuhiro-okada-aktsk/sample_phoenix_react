@@ -1,6 +1,7 @@
 import React from 'react';
 import Relay from 'react-relay';
 
+import NaviBar from './NaviBar.jsx'
 import Feed from './Feed.jsx'
 
 class FeedList extends React.Component {
@@ -21,6 +22,7 @@ class FeedList extends React.Component {
   render() {
     return (
       <div className="container">
+        <NaviBar />
         {this.renderFeeds()}
       </div>
     );

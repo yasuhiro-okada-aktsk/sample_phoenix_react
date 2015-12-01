@@ -18,7 +18,7 @@ export default class NavBar extends Component {
               <span className="icon-bar"></span>
               <span className="icon-bar"></span>
             </button>
-            <a className="navbar-brand" href="#">Brand</a>
+            <a className="navbar-brand" href="#">Redux</a>
           </div>
 
           <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -26,7 +26,7 @@ export default class NavBar extends Component {
               <li><Link to="/">home</Link></li>
               <li><Link to="/feed_add">Feed add</Link></li>
               <li><Link to="/feed_list">Feed List</Link></li>
-              <li><Link to="/feed_list_graphql">Feed List (GraphQL)</Link></li>
+              <li><Link to="/feed_list_graphql">Feed List (Adrenaline)</Link></li>
               <li><a href="/graphql">Feed List (Relay)</a></li>
               <li><a href="/page1">page1 (server)</a></li>
             </ul>
