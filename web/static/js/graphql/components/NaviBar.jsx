@@ -40,5 +40,4 @@ export default class NavBar extends Component {
 
 
 NavBar.propTypes = {
-  loggedIn: PropTypes.bool.isRequired
 };
