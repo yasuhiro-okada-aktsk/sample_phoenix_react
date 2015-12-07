@@ -39,7 +39,6 @@ export default Relay.createContainer(Feed, {
     feed: () => Relay.QL`
       fragment on RssFeed {
         title,
-        subtitle,
         summary
       }
     `,
